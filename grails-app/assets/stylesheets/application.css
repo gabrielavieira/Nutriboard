@@ -13,3 +13,9 @@
 *= require mobile
 *= require_self
 */
+
+
+.ajBtnsemlabel
+{
+    padding-top:24px;
+}

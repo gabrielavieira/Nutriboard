@@ -1,16 +1,28 @@
 package app_nutri
 
-class PacienteController {
+import grails.converters.JSON
 
-    def index() {
-        def model = [:]
+import java.text.DateFormat
+import java.text.SimpleDateFormat
 
-        render(view: "index", model: model)
+class PacienteController extends CRUDController{
+
+    def entity = Paciente
+
+    def query = {
+        order( 'nome' )
+    }
+    @Override
+    def beforeSave(entityInstance,model){
+        DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+        if( params.dtNascimento )
+            entityInstance.dataNascimento = (Date)formatter.parse(params.dtNascimento)
+
+        entityInstance.ativo = true
     }
 
-    def novo(){
-        print params
-        def model = [entityInstance: Paciente.newInstance(params)]
-        render(view: "index", model: model)
+    def teste(){
+        def pacientes = Paciente.list()
+        render pacientes as JSON
     }
 }

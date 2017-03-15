@@ -3,13 +3,12 @@
     <head>
         <meta name="layout" content="main"/>
         <title><g:message code="paciente.label"/></title>
-        <asset:javascript src="application.js"/>
-        <asset:stylesheet src="application.css"/>
-        <asset:javascript src="bootstrap-datepicker.js"/>
-        <asset:javascript src="bootstrap-datepicker.pt-BR.min.js"/>
-        <asset:stylesheet src="bootstrap-datepicker.css"/>
+        <asset:stylesheet src="plugins/bootstrap-datepicker3.css"/>
     </head>
     <body>
-        <g:render template="form"/>
+        <div id="conteudo">
+            <g:render template="grid"/>
+        </div>
+        <asset:javascript src="paciente/paciente.js"/>
     </body>
 </html>
