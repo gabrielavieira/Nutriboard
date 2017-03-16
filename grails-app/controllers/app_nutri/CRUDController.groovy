@@ -25,6 +25,11 @@ class CRUDController {
         returnList(model)
     }
 
+    def novo() {
+        def model = [entityInstance: entity.newInstance(params)]
+        render( template: "form", model: model )
+    }
+
     def getInstanceEntity() {
         def entityInstance
         if( params.id ){

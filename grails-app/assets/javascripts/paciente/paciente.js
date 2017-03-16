@@ -1,8 +1,10 @@
 var salvar;
+var novo;
 
 window.onload = function()
 {
     jQuery(document).delegate( ".salvar", "click", salvar);
+    jQuery(document).delegate( ".novo", "click", novo);
 
     carregaDatepicker();
 
@@ -25,12 +27,23 @@ salvar = function () {
     var nome = $('[name=nome]').val();
     var dataNascimento = $('[name=dataNascimento]').val();
     var email = $('[name=email]').val();
-    console.log( "salvar" );
     jQuery.ajax
     ({
         url: "/paciente/save",
         type: "POST",
         data: { nome: nome, dtNascimento: dataNascimento, email: email },
+        success: function ( data ) {
+            $('#conteudo').html( data );
+        }
+    });
+};
+
+novo = function () {
+    console.log( "novo" );
+    jQuery.ajax
+    ({
+        url: "/paciente/novo",
+        type: "POST",
         success: function ( data ) {
             $('#conteudo').html( data );
         }

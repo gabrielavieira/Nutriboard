@@ -1,3 +1,13 @@
+<div  class="container">
+    <div class="col-md-12">
+        <h3>
+            Pesquisa de:
+            <span class="identBloco">Paciente</span>
+            <button type="button" class="btn btn-default novo pull-right">Novo</button>
+        </h3>
+    </div>
+</div>
+
 <div class="container">
     <div class="col-md-2">
         <div class="form-group">

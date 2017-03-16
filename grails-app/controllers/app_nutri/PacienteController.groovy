@@ -12,8 +12,9 @@ class PacienteController extends CRUDController{
     def query = {
         order( 'nome' )
     }
+
     @Override
-    def beforeSave(entityInstance,model){
+    beforeSave(entityInstance,model){
         DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
         if( params.dtNascimento )
             entityInstance.dataNascimento = (Date)formatter.parse(params.dtNascimento)
