@@ -75,6 +75,15 @@ class CRUDController {
         returnSave( edit, entityInstance, model)
     }
 
+    def edit() {
+        def entityInstance = entity.get(params.id)
+        def model = [entityInstance: entityInstance]
+
+        model = editaModelDoEdit( model )
+
+        render(template: "form", layout: "ajax", model: model )
+    }
+
     def returnSave(boolean edit, def entityInstance, LinkedHashMap model) {
         if (!edit || !entityInstance.validate()) {
             entityInstance = entity.newInstance()
@@ -97,6 +106,11 @@ class CRUDController {
     }
 
     def editaModelDoList( def model )
+    {
+        return model
+    }
+
+    def editaModelDoEdit( def model )
     {
         return model
     }

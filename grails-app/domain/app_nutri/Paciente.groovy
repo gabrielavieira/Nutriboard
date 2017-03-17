@@ -1,5 +1,8 @@
 package app_nutri
 
+import java.text.DateFormat
+import java.text.SimpleDateFormat
+
 class Paciente {
 
     String nome
@@ -12,5 +15,10 @@ class Paciente {
 
     static constraints = {
         avaliacoesAntropometricas nullable: true
+    }
+
+    String getDataFormatada(){
+        DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+        return formatter.format(dataNascimento).toString()
     }
 }

@@ -2,7 +2,7 @@
     <div class="col-md-12">
         <h3>
             <h2>Pesquisa | Receita</h2>
-            <button type="button" class="btn btn-default novo pull-right">Nova</button>
+            <button type="button" class="btn btn-default novo pull-right" data-controller="receita">Nova</button>
         </h3>
     </div>
 </div>
@@ -17,7 +17,7 @@
     <div>
         <div class="form-group">
             <div class="ajBtnsemlabel"></div>
-            <button type="button" class="btn btn-danger pesquisar">Pesquisar</button>
+            <button type="button" class="btn btn-danger pesquisar" data-controller="receita">Pesquisar</button>
         </div>
     </div>
 </div>

@@ -9,6 +9,5 @@
         <div id="conteudo">
             <g:render template="form"/>
         </div>
-        <asset:javascript src="paciente/paciente.js"/>
     </body>
 </html>

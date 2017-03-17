@@ -9,6 +9,5 @@
         <div id="conteudo">
             <g:render template="grid"/>
         </div>
-        <asset:javascript src="receita/receita.js"/>
     </body>
 </html>

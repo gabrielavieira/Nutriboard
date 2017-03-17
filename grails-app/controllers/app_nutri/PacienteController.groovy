@@ -1,7 +1,5 @@
 package app_nutri
 
-import grails.converters.JSON
-
 import java.text.DateFormat
 import java.text.SimpleDateFormat
 
@@ -32,4 +30,17 @@ class PacienteController extends CRUDController{
         entityInstance.ativo = true
     }
 
+    @Override
+    def novo() {
+        def model = [entityInstance: entity.newInstance(params)]
+        render( view: "index", model: model )
+    }
+
+    @Override
+    def edit() {
+        print params
+        def entityInstance = entity.get(params.id)
+        def model = [entityInstance: entityInstance]
+        render( view: "index", model: model )
+    }
 }

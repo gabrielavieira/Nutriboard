@@ -15,8 +15,21 @@
 //= require_tree .
 //= require_self
 
+var salvar;
+var novo;
+var pesquisar;
+var editar;
+var excluir;
+
 window.onload = function()
 {
+    jQuery(document).delegate( ".salvar", "click", salvar);
+    jQuery(document).delegate( ".novo", "click", novo);
+    jQuery(document).delegate( ".pesquisar", "click", pesquisar);
+    jQuery(document).delegate( ".voltar", "click", pesquisar);
+    jQuery(document).delegate( ".editar", "click", editar);
+    jQuery(document).delegate( ".excluir", "click", excluir);
+
     carregaDatepicker();
 
     jQuery( document ).ajaxStop( function()
@@ -32,4 +45,50 @@ function carregaDatepicker(){
         todayBtn: "linked",
         autoclose: true
     });
+};
+
+salvar = function () {
+    var controller = $(this).attr('data-controller');
+    jQuery.ajax
+    ({
+        url: "/"+ controller +"/save",
+        type: "POST",
+        data : $( '#formNovo' ).find( 'input,select' ).serialize(),
+        success: function ( data ) {
+            $('#conteudo').html( data );
+        }
+    });
+};
+
+novo = function () {
+    var controller = $(this).attr('data-controller');
+    jQuery.ajax
+    ({
+        url: "/"+ controller +"/novo",
+        type: "POST",
+        success: function ( data ) {
+            $('#conteudo').html( data );
+        }
+    });
+};
+
+pesquisar = function () {
+    var controller = $(this).attr('data-controller');
+    jQuery.ajax
+    ({
+        url: "/"+ controller +"/list",
+        data: $( '#formPesquisa' ).find( 'input,select' ).serialize(),
+        type: "POST",
+        success: function ( data ) {
+            $('#conteudo').html( data );
+        }
+    });
+};
+
+editar = function () {
+    console.log("editar!!");
+};
+
+excluir = function () {
+    console.log("excluir!!");
 };
