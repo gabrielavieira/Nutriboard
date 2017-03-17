@@ -34,7 +34,10 @@
             <g:each in="${entityInstanceList}" var="entityInstance" status="i">
                 <tr>
                     <td>${entityInstance.nome}</td>
-                    <td><button type="button" class="btn btn-danger visualizar">Visualizar</button></td>
+                    <td>
+                        <button type="button" class="btn btn-default visualizar"><i class="fa fa-pencil"></i></button>
+                        <button type="button" class="btn btn-danger visualizar"><i class="fa fa-times"></i></button>
+                    </td>
                 </tr>
             </g:each>
             </tbody>

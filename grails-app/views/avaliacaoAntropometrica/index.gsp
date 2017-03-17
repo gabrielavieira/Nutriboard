@@ -7,7 +7,7 @@
     </head>
     <body>
         <div id="conteudo">
-            <g:render template="grid"/>
+            <g:render template="form"/>
         </div>
     </body>
 </html>

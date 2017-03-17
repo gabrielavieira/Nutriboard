@@ -14,7 +14,7 @@
         </div>
         <div class="form-group">
             <label for="descricao"><g:message code="receita.descricao.label"/></label>
-            <input type="text" class="form-control" id="descricao" name="descricao" value="${entityInstance?.descricao}">
+            <textarea class="form-control" rows="5" id="descricao" name="descricao" value="${entityInstance?.descricao}"></textarea>
         </div>
         <button type="button" class="btn btn-danger salvar" data-controller="receita">Salvar</button>
     </form>

@@ -53,7 +53,7 @@ salvar = function () {
     ({
         url: "/"+ controller +"/save",
         type: "POST",
-        data : $( '#formNovo' ).find( 'input,select' ).serialize(),
+        data : $( '#formNovo' ).find( 'input,select,textarea' ).serialize(),
         success: function ( data ) {
             $('#conteudo').html( data );
         }
