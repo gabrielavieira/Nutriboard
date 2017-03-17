@@ -10,6 +10,16 @@ class PacienteController extends CRUDController{
     def entity = Paciente
 
     def query = {
+        print params
+        if( params.nome ){
+            like("nome", "%" + params.nome + "%" )
+        }
+        if( params.cpf ){
+            ep("cpf", params.cpf )
+        }
+        if( params.email ){
+            like("email", "%" + params.email + "%" )
+        }
         order( 'nome' )
     }
 
@@ -22,8 +32,4 @@ class PacienteController extends CRUDController{
         entityInstance.ativo = true
     }
 
-    def teste(){
-        def pacientes = Paciente.list()
-        render pacientes as JSON
-    }
 }

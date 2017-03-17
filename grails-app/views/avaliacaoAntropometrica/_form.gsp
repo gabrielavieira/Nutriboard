@@ -12,10 +12,6 @@
             <label for="nome"><g:message code="paciente.nome.label"/></label>
             <input type="text" class="form-control" id="nome" name="nome" value="${entityInstance?.nome}">
         </div>
-        <div class="form-group">
-            <label for="cpf"><g:message code="paciente.cpf.label"/></label>
-            <input type="text" class="form-control" id="cpf" name="cpf" value="${entityInstance?.cpf}">
-        </div>
         <div class="form-group data">
             <label for="dataNascimento"><g:message code="paciente.dataNascimento.label"/></label>
             <input type="text" class="form-control" id="dataNascimento" name="dataNascimento" value="${entityInstance?.dataNascimento}">

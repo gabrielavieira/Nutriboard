@@ -16,7 +16,7 @@ class CRUDController {
 
         def criteria = entity.createCriteria()
         def entities = criteria.list(query)
-        def model = [entityInstanceList: entities]
+        def model = [entityInstanceList: entities, filters: params]
 
         model = editaModelDoList( model )
 

@@ -8,6 +8,10 @@
 * compiled file, but it's generally better to create a new file per style scope.
 *
 *= require plugins/bootstrap
+*= require plugins/AdminLTE.min
+*= require plugins/_all-skins.min
+*= require plugins/fullcalendar.min
+*= require plugins/fullcalendar.print
 *= require mobile
 *= require_self
 */
@@ -20,4 +24,13 @@
 
 .ajNavBar{
     border-radius: 0px;
+    margin-bottom: 0px;
+}
+
+.ajMainSideBar{
+    padding-top: 0px;
+}
+
+.ajContentWrapper{
+    margin-left: 0px;
 }

@@ -18,7 +18,7 @@
         <div class="container-fluid">
             <!-- Brand and toggle get grouped for better mobile display -->
             <div class="navbar-header">
-                <a class="navbar-brand" href="#">NutriBoard</a>
+                <a class="navbar-brand" href="/">NutriBoard</a>
             </div>
 
             <!-- Collect the nav links, forms, and other content for toggling -->
@@ -33,7 +33,7 @@
                                 </a>
                             </li>
                             <li>
-                                <a href="#">
+                                <a href="${createLink(controller: 'avaliacaoAntropometrica', action: 'index')}">
                                     <g:message code="cadastro.menu.item.avaliacaoAntropometrica.label"/>
                                 </a>
                             </li>
