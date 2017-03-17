@@ -33,6 +33,11 @@
                                 </a>
                             </li>
                             <li>
+                                <a href="${createLink(controller: 'receita', action: 'index')}">
+                                    <g:message code="cadastro.menu.item.receita.label"/>
+                                </a>
+                            </li>
+                            <li>
                                 <a href="${createLink(controller: 'avaliacaoAntropometrica', action: 'index')}">
                                     <g:message code="cadastro.menu.item.avaliacaoAntropometrica.label"/>
                                 </a>

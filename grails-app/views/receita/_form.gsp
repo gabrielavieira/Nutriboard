@@ -1,0 +1,21 @@
+<div  class="container">
+    <div class="col-md-12">
+        <h3>
+            <h2>Cadastro | Receita</h2>
+            <button type="button" class="btn btn-default voltar pull-right">Voltar</button>
+        </h3>
+    </div>
+</div>
+<div class="container">
+    <form>
+        <div class="form-group">
+            <label for="nome"><g:message code="receita.nome.label"/></label>
+            <input type="text" class="form-control" id="nome" name="nome" value="${entityInstance?.nome}">
+        </div>
+        <div class="form-group">
+            <label for="descricao"><g:message code="receita.descricao.label"/></label>
+            <input type="text" class="form-control" id="descricao" name="descricao" value="${entityInstance?.descricao}">
+        </div>
+        <button type="button" class="btn btn-danger salvar">Salvar</button>
+    </form>
+</div>

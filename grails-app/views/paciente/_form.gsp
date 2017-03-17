@@ -13,7 +13,7 @@
             <input type="text" class="form-control" id="nome" name="nome" value="${entityInstance?.nome}">
         </div>
         <div class="form-group">
-            <label for="cpf"><g:message code="paciente.cpf.label"/></label>
+            <label for="cpf"><g:message code="paciente.CPF.label"/></label>
             <input type="text" class="form-control" id="cpf" name="cpf" value="${entityInstance?.cpf}">
         </div>
         <div class="form-group data">

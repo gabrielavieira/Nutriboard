@@ -7,8 +7,8 @@
     </head>
     <body>
         <div id="conteudo">
-            <g:render template="form"/>
+            <g:render template="grid"/>
         </div>
-        <asset:javascript src="paciente/paciente.js"/>
+        <asset:javascript src="receita/receita.js"/>
     </body>
 </html>

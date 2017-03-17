@@ -1,6 +1,8 @@
 var salvar;
 var novo;
 var pesquisar;
+var editar;
+var excluir;
 
 window.onload = function()
 {
@@ -8,6 +10,8 @@ window.onload = function()
     jQuery(document).delegate( ".novo", "click", novo);
     jQuery(document).delegate( ".pesquisar", "click", pesquisar);
     jQuery(document).delegate( ".voltar", "click", pesquisar);
+    jQuery(document).delegate( ".editar", "click", editar);
+    jQuery(document).delegate( ".excluir", "click", excluir);
 
     carregaDatepicker();
 
@@ -30,11 +34,12 @@ salvar = function () {
     var nome = $('[name=nome]').val();
     var dataNascimento = $('[name=dataNascimento]').val();
     var email = $('[name=email]').val();
+    var cpf = $('[name=cpf]').val();
     jQuery.ajax
     ({
         url: "/paciente/save",
         type: "POST",
-        data: { nome: nome, dtNascimento: dataNascimento, email: email },
+        data: { nome: nome, dtNascimento: dataNascimento, email: email, cpf: cpf },
         success: function ( data ) {
             $('#conteudo').html( data );
         }
@@ -65,4 +70,12 @@ pesquisar = function () {
             $('#conteudo').html( data );
         }
     });
+};
+
+editar = function () {
+    console.log("editar!!");
+};
+
+excluir = function () {
+    console.log("excluir!!");
 };
