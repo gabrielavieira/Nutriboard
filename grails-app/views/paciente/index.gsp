@@ -6,7 +6,7 @@
         <asset:stylesheet src="bootstrap-datepicker3.css"/>
     </head>
     <body>
-        <div id="conteudo">
+        <div id="conteudo" >
             <g:render template="form"/>
         </div>
         <asset:javascript src="paciente/paciente.js"/>

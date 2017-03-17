@@ -14,12 +14,22 @@
     <g:layoutHead/>
 </head>
 <body>
+
+<!-- Main Header -->
+<header class="main-header">
     <nav class="navbar navbar-inverse ajNavBar">
+
+
+
         <div class="container-fluid">
             <!-- Brand and toggle get grouped for better mobile display -->
             <div class="navbar-header">
                 <a class="navbar-brand" href="/">NutriBoard</a>
             </div>
+
+            <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
+                <span class="sr-only">Toggle navigation</span>
+            </a>
 
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -56,7 +66,45 @@
             </div><!-- /.navbar-collapse -->
         </div><!-- /.container-fluid -->
     </nav>
+</header>
 
     <g:layoutBody/>
+
+    <aside class="main-sidebar ">
+
+        <!-- sidebar: style can be found in sidebar.less -->
+        <section class="sidebar">
+
+            <!-- Sidebar Menu -->
+            <ul class="sidebar-menu skin-black-light">
+                <li class="header">Cadastros</li>
+                <!-- Optionally, you can add icons to the links -->
+                <li class="active">
+                    <a href="${createLink(controller: 'paciente', action: 'index')}">
+                        <g:message code="cadastro.menu.item.paciente.label"/>
+                    </a>
+                </li>
+                <li>
+                    <a href="${createLink(controller: 'receita', action: 'index')}">
+                        <g:message code="cadastro.menu.item.receita.label"/>
+                    </a>
+                </li>
+                <li>
+                    <a href="${createLink(controller: 'avaliacaoAntropometrica', action: 'index')}">
+                        <g:message code="cadastro.menu.item.avaliacaoAntropometrica.label"/>
+                    </a>
+                </li>
+                <li class="treeview">
+
+                    <ul class="treeview-menu">
+                        <li><a href="#">Link in level 2</a></li>
+                        <li><a href="#">Link in level 2</a></li>
+                    </ul>
+                </li>
+            </ul>
+            <!-- /.sidebar-menu -->
+        </section>
+        <!-- /.sidebar -->
+    </aside>
 </body>
 </html>
