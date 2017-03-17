@@ -200,7 +200,7 @@
         <!-- Main content -->
         <section class="content">
             <div class="row">
-                <div class="col-md-6">
+                <div class="col-md-8">
                     <div class="box">
                         <div class="box-header with-border">
                             <h3 class="box-title"> Pacientes </h3>
@@ -248,7 +248,7 @@
                     </div>
                     <!-- /.box -->
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-4">
                     <!-- TO DO List -->
                     <div class="box box-primary">
                         <div class="box-header">
@@ -277,7 +277,7 @@
                                     <!-- checkbox -->
                                     <input type="checkbox" value="">
                                     <!-- todo text -->
-                                    <span class="text">Pesquisar sobre Alimentos que auxiliam pessoas diabéticas.</span>
+                                    <span class="text">Pesquisar sobre Alimentos.</span>
                                     <!-- Emphasis label -->
                                     <small class="label label-danger"><i class="fa fa-clock-o"></i> 2 mins</small>
                                     <!-- General tools such as edit or delete-->
