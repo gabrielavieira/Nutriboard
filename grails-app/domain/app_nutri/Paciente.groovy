@@ -5,7 +5,13 @@ import java.text.SimpleDateFormat
 
 class Paciente {
 
+    /*TODO: Temporário*/
+    enum Genero{
+        FEMININO, MASCULINO
+    }
+
     String nome
+    Genero genero
     String cpf
     Date dataNascimento
     String email
@@ -19,6 +25,6 @@ class Paciente {
 
     String getDataFormatada(){
         DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-        return formatter.format(dataNascimento).toString()
+        return formatter.format(dataNascimento != null ? dataNascimento : new Date()).toString()
     }
 }
