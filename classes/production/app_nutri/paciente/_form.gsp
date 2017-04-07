@@ -108,15 +108,15 @@
                                     <div class="panel-body">
                                         <div class="form-group">
                                             <label for="suplementos"><g:message code="paciente.habitosAlimentares.suplementos.label"/></label>
-                                            <textarea class="form-control" rows="5" id="suplementos" name="suplementos">${anamneseAtual?.suplementos}</textarea>
+                                            <textarea class="form-control" rows="5" id="suplementos" name="suplementos"></textarea>
                                         </div>
                                         <div class="form-group">
                                             <label for="alergiaAlimentar"><g:message code="paciente.habitosAlimentares.alergiaAlimentar.label"/></label>
-                                            <textarea class="form-control" rows="5" id="alergiaAlimentar" name="alergiaAlimentar">${anamneseAtual?.alergiaAlimentar}</textarea>
+                                            <textarea class="form-control" rows="5" id="alergiaAlimentar" name="alergiaAlimentar"></textarea>
                                         </div>
                                         <div class="form-group">
                                             <label for="intoleranciaAlimentar"><g:message code="paciente.habitosAlimentares.intoleranciaAlimentar.label"/></label>
-                                            <textarea class="form-control" rows="5" id="intoleranciaAlimentar" name="intoleranciaAlimentar">${anamneseAtual?.intoleranciaAlimentar}</textarea>
+                                            <textarea class="form-control" rows="5" id="intoleranciaAlimentar" name="intoleranciaAlimentar"></textarea>
                                         </div>
                                     </div>
                                 </div>

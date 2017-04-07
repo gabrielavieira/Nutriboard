@@ -17,10 +17,15 @@ class Paciente {
     String email
     Boolean ativo
 
-    static hasMany = [avaliacoesAntropometricas : AvaliacaoAntropometrica]
+    static hasMany = [avaliacoesAntropometricas : AvaliacaoAntropometrica, anamneses: Anamnese]
 
     static constraints = {
         avaliacoesAntropometricas nullable: true
+        anamneses nullable: true
+    }
+
+    static mapping = {
+        avaliacoesAntropometricas cascade: 'all-delete-orphan'
     }
 
     String getDataFormatada(){

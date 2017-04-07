@@ -54,7 +54,7 @@ class CRUDController {
         if( entityInstance.errors.getErrorCount() < 1 && entityInstance.validate() )
         {
             if (entityInstance.save(flush: true)) {
-                afterSave(entityInstance,model);
+                afterSave(entityInstance,model)
                 if(edit){
                     flash.message = message(code: 'default.updated.message')
                 }else{
@@ -116,4 +116,5 @@ class CRUDController {
     }
 
     def afterSave(entityInstance,model){}
+
 }
