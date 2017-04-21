@@ -63,12 +63,12 @@
                                     <div class="panel-body">
                                         <div class="checkbox">
                                             <label>
-                                                <input type="checkbox"> Fumante
+                                                <input type="checkbox" name="isFumante" ${anamneseAtual?.habitoDeVida?.isFumante ?  'checked' : ''}> Fumante
                                             </label>
                                         </div>
                                         <div class="checkbox">
                                             <label>
-                                                <input type="checkbox"> Ingere bebida alcoólica
+                                                <input type="checkbox" name="isAlcoolatra" ${anamneseAtual?.habitoDeVida?.isAlcoolatra ?  'checked' : ''}> Ingere bebida alcoólica
                                             </label>
                                         </div>
                                     </div>
@@ -88,7 +88,7 @@
                                             <div class="col-md-2">
                                                 <div class="checkbox">
                                                     <label>
-                                                        <input type="checkbox" value="patologia"> <g:message code="paciente.patologia.${patologia}.label"/>
+                                                        <input type="checkbox" value="${patologia}" name="patologias" ${anamneseAtual?.patologias?.contains(patologia) ? 'checked' : ''}> <g:message code="paciente.patologia.${patologia}.label"/>
                                                     </label>
                                                 </div>
                                             </div>

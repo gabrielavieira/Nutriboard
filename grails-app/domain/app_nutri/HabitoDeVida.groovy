@@ -1,18 +1,15 @@
 package app_nutri
 
-class HabitoDeVida {
+import enums.OpcaoAlimentar
 
-    /*TODO: Temporário*/
-    enum OpcaoAlimentar{
-        VEGETARIANO("vegetariano"),
-        VEGANO("Vegano"),
-        OUTROS("Outros")
-    }
+class HabitoDeVida {
 
     OpcaoAlimentar opcaoAlimentar
     Boolean isAlcoolatra
     Boolean isFumante
 
-    static constraints = {}
+    static constraints = {
+        opcaoAlimentar nullable: true
+    }
 
 }

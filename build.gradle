@@ -54,7 +54,7 @@ dependencies {
     testRuntime "org.seleniumhq.selenium:selenium-htmlunit-driver:2.47.1"
     testRuntime "net.sourceforge.htmlunit:htmlunit:2.18"
     runtime "mysql:mysql-connector-java:5.1.36"
-    compile "org.grails.plugins:twitter-bootstrap:3.3.4"
+    compile 'com.siprell.plugins:bootstrap-framework:1.0.3'
 }
 
 bootRun {

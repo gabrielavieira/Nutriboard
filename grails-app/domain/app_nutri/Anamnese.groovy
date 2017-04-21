@@ -23,12 +23,12 @@ class Anamnese {
         HIPERTIREOIDISMO
     }
 
-    HabitoDeVida habitoDeVida
     List<Patologia> patologias
     String suplementos
     String alergiaAlimentar
     String intoleranciaAlimentar
     Date data = new Date()
+    HabitoDeVida habitoDeVida
 
     static belongsTo = [paciente: Paciente]
 
@@ -38,6 +38,10 @@ class Anamnese {
         suplementos nullable: true
         alergiaAlimentar nullable: true
         intoleranciaAlimentar nullable: true
+    }
+
+    static mapping = {
+        habitoDeVida cascade: "save-update"
     }
 
     static getPatologiasDisponiveis(){

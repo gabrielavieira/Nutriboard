@@ -1,5 +1,7 @@
 package app_nutri
 
+import enums.Genero
+
 import java.text.DateFormat
 import java.text.SimpleDateFormat
 
@@ -83,11 +85,16 @@ class PacienteController extends CRUDController{
 
     Anamnese getAnamnese(){
         Anamnese anamnese = Anamnese.newInstance(params)
+        HabitoDeVida habito = new HabitoDeVida()
+        habito.isAlcoolatra = params.isAlcoolatra ? true : false
+        habito.isFumante = params.isFumante ? true : false
+        anamnese.habitoDeVida = habito
         return anamnese
     }
 
     def editaModelPadrao(model){
         model.put("patologias", Anamnese.getPatologiasDisponiveis() )
+        Genero g
         return model
     }
 

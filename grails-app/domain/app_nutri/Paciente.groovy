@@ -1,14 +1,11 @@
 package app_nutri
 
+import enums.Genero
+
 import java.text.DateFormat
 import java.text.SimpleDateFormat
 
 class Paciente {
-
-    /*TODO: Temporário*/
-    enum Genero{
-        FEMININO, MASCULINO
-    }
 
     String nome
     Genero genero
