@@ -9,6 +9,9 @@
 *
 *= require plugins/bootstrap
 *= require plugins/AdminLTE.min
+*= require plugins/font-awesome.min
+*= require plugins/ionicons.min
+*= require plugins/sweetalert.css
 *= require plugins/_all-skins.min
 *= require plugins/fullcalendar.min
 *= require plugins/fullcalendar.print

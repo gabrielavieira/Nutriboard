@@ -30,8 +30,6 @@ class PacienteController extends CRUDController{
         if( params.dtNascimento )
             entityInstance.dataNascimento = (Date)formatter.parse(params.dtNascimento)
 
-        entityInstance.addToAnamneses( getAnamnese() )
-
         entityInstance.ativo = true
     }
 
@@ -63,13 +61,14 @@ class PacienteController extends CRUDController{
         println entityInstance.errors
         model = editaModelDoSave( model )
 
-        returnSave( edit, entityInstance, model)
+        render(template: "perfilPaciente", model: model)
     }
 
     @Override
     novo() {
         def model = [:]
         model.put("entityInstance", entity.newInstance(params))
+        model.put("template", "preCadastro" )
         render( view: "index", model: editaModelPadrao(model) )
     }
 
@@ -78,7 +77,8 @@ class PacienteController extends CRUDController{
         def entityInstance = entity.get(params.id)
         def model = [:]
         model.put("entityInstance", entityInstance)
-        model.put("anamneseAtual", Anamnese.findAllByPaciente( entityInstance, [sort: "data"] )?.first() )
+//        model.put("anamneseAtual", Anamnese.findAllByPaciente( entityInstance, [sort: "data"] )?.first() )
+        model.put("template", "perfilPaciente" )
 
         render( view: "index", model: editaModelPadrao(model) )
     }

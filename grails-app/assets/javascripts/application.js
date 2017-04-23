@@ -1,17 +1,7 @@
-// This is a manifest file that'll be compiled into application.js.
-//
-// Any JavaScript file within this directory can be referenced here using a relative path.
-//
-// You're free to add application-wide JavaScript to this file, but it's generally better
-// to create separate JavaScript files as needed.
-//
 //= require jquery-2.2.0.min
-//= require plugins/bootstrap
-//= require plugins/bootstrap.min.js
+//= require plugins/sweetalert.min
 //= require plugins/bootstrap-datepicker
 //= require plugins/bootstrap-datepicker.pt-BR
-//= require plugins/jquery.slimscroll.min
-//= require plugins/fastclick
 //= require_tree .
 //= require_self
 
@@ -20,6 +10,7 @@ var novo;
 var pesquisar;
 var editar;
 var excluir;
+var adicionarAtividade;
 
 window.onload = function()
 {
@@ -28,7 +19,7 @@ window.onload = function()
     jQuery(document).delegate( ".pesquisar", "click", pesquisar);
     jQuery(document).delegate( ".voltar", "click", pesquisar);
     jQuery(document).delegate( ".editar", "click", editar);
-    jQuery(document).delegate( ".excluir", "click", excluir);
+    jQuery(document).delegate( "#adicionarAtividade", "click", adicionarAtividade);
 
     carregaDatepicker();
 
@@ -48,6 +39,7 @@ function carregaDatepicker(){
 };
 
 salvar = function () {
+    console.log("salvando");
     var controller = $(this).attr('data-controller');
     jQuery.ajax
     ({
@@ -91,4 +83,20 @@ editar = function () {
 
 excluir = function () {
     console.log("excluir!!");
+};
+
+adicionarAtividade = function () {
+    var descricao = $('[name=descricao]').val();
+
+    jQuery.ajax
+    ({
+        url: "/atividade/save",
+        type: "POST",
+        data : {descricao: descricao},
+        success: function ( data ) {
+            $('#atividades').html(data);
+            $('#modalCadastroAtividade').modal('hide');
+            $('[name=descricao]').val("");
+        }
+    });
 };
