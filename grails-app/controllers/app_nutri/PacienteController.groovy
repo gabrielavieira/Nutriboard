@@ -76,7 +76,7 @@ class PacienteController extends CRUDController{
     edit() {
         def entityInstance = entity.get(params.id)
         def model = [:]
-        model.put("entityInstance", entityInstance)
+        model.put("paciente", entityInstance)
 //        model.put("anamneseAtual", Anamnese.findAllByPaciente( entityInstance, [sort: "data"] )?.first() )
         model.put("template", "perfilPaciente" )
 

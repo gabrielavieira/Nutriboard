@@ -29,4 +29,10 @@ class Paciente {
         DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
         return formatter.format(dataNascimento != null ? dataNascimento : new Date()).toString()
     }
+
+    Integer getIdade() {
+        long ageInMillis = new Date().getTime() - dataNascimento.getTime()
+        Date age = new Date(ageInMillis)
+        return age.getYear()
+    }
 }

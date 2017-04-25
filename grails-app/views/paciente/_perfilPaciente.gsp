@@ -8,13 +8,13 @@
                     <div class="box-body box-profile">
                         <img class="profile-user-img img-responsive img-circle" src="${resource(dir: "images/", file: "circulo.png")}" alt="User profile picture">
 
-                        <h3 class="profile-username text-center">${paciente?.nome}Gabriela Silva</h3>
+                        <h3 class="profile-username text-center">${paciente?.nome}</h3>
 
                         <p class="text-muted text-center"> Perfil do Paciente </p>
 
                         <ul class="list-group list-group-unbordered">
                             <li class="list-group-item">
-                                <b>Idade</b> <a class="pull-right">20 anos</a>
+                                <b>Idade</b> <a class="pull-right">${paciente?.getIdade()} anos</a>
                             </li>
                             <li class="list-group-item">
                                 <b>Altura</b> <a class="pull-right">1,59 m</a>
@@ -35,13 +35,13 @@
                 <div class="nav-tabs-custom">
                     <ul class="nav nav-tabs">
                         <li class="active"><a href="#anamnese" data-toggle="tab" aria-expanded="true">Anamnese</a></li>
-                        <li class=""><a href="#timeline" data-toggle="tab" aria-expanded="false">Avaliação Antropométrica</a></li>
+                        <li class=""><a href="#avaliacaoAntropometrica" data-toggle="tab" aria-expanded="false">Avaliação Antropométrica</a></li>
                         <li class=""><a href="#settings" data-toggle="tab" aria-expanded="false">Settings</a></li>
                     </ul>
                     <div class="tab-content">
                         <!-- INÍCIO ABA ANAMNESE -->
                         <div class="tab-pane active" id="anamnese">
-                            <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                            <div class="panel-group" role="tablist" aria-multiselectable="true">
                                 <div class="panel panel-default">
                                     <div class="panel-heading" role="tab" id="headingOne">
                                         <h4 class="panel-title">
@@ -115,102 +115,181 @@
                             </div>
                         </div>
                         <!-- FIM ABA ANAMNESE -->
+
                         <!-- INÍCIO ABA AVALIAÇÃO ANTROPOMÉTRICA -->
-                        <div class="tab-pane" id="timeline">
-                            <!-- The timeline -->
-                            <ul class="timeline timeline-inverse">
-                                <!-- timeline time label -->
-                                <li class="time-label">
-                                    <span class="bg-red">
-                                        10 Feb. 2014
-                                    </span>
-                                </li>
-                                <!-- /.timeline-label -->
-                                <!-- timeline item -->
-                                <li>
-                                    <i class="fa fa-envelope bg-blue"></i>
+                        <div class="tab-pane" id="avaliacaoAntropometrica">
+                            <div class="panel-group" role="tablist" aria-multiselectable="true">
+                            <div class="panel panel-default">
+                                <div class="panel-heading" role="tab" id="circunferencia">
+                                    <h4 class="panel-title">
+                                        <a role="button" data-toggle="collapse" data-parent="#accordion" href="#conteudoCircunferencias" aria-expanded="true" aria-controls="conteudoCircunferencias">
+                                            Circunferências
+                                        </a>
+                                    </h4>
+                                </div>
+                                <div id="conteudoCircunferencias" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="circunferencia">
+                                    <div class="panel-body">
+                                        <div class="col-md-6">
+                                            <div class="form-group col-md-12">
+                                                <label class="col-md-6">Ombro</label>
+                                                <div class="col-md-6">
+                                                    <input type="text" class="form-control" name="ombro">
+                                                </div>
+                                            </div>
+                                            <div class="form-group col-md-12">
+                                                <label class="col-md-6">Peitoral</label>
+                                                <div class="col-md-6">
+                                                    <input type="text" class="form-control" name="peitoral">
+                                                </div>
+                                            </div>
+                                            <div class="form-group col-md-12">
+                                                <label class="col-md-6">Cintura</label>
+                                                <div class="col-md-6">
+                                                    <input type="text" class="form-control" name="cintura">
+                                                </div>
+                                            </div>
+                                            <div class="form-group col-md-12">
+                                                <label class="col-md-6">Abdomen</label>
+                                                <div class="col-md-6">
+                                                    <input type="text" class="form-control" name="abdomen">
+                                                </div>
+                                            </div>
+                                            <div class="form-group col-md-12">
+                                                <label class="col-md-6">Quadril</label>
+                                                <div class="col-md-6">
+                                                    <input type="text" class="form-control" name="quadril">
+                                                </div>
+                                            </div>
+                                            <div class="form-group col-md-12">
+                                                <label class="col-md-6">Panturrilha direita</label>
+                                                <div class="col-md-6">
+                                                    <input type="text" class="form-control" name="panturrilhaDireita">
+                                                </div>
+                                            </div>
 
-                                    <div class="timeline-item">
-                                        <span class="time"><i class="fa fa-clock-o"></i> 12:05</span>
-
-                                        <h3 class="timeline-header"><a href="#">Support Team</a> sent you an email</h3>
-
-                                        <div class="timeline-body">
-                                            Etsy doostang zoodles disqus groupon greplin oooj voxy zoodles,
-                                            weebly ning heekya handango imeem plugg dopplr jibjab, movity
-                                            jajah plickers sifteo edmodo ifttt zimbra. Babblely odeo kaboodle
-                                            quora plaxo ideeli hulu weebly balihoo...
+                                            <div class="form-group col-md-12">
+                                                <label class="col-md-6">Panturrilha esquerda</label>
+                                                <div class="col-md-6">
+                                                    <input type="text" class="form-control" name="panturrilhaEsquerda">
+                                                </div>
+                                            </div>
+                                            <div class="form-group col-md-12">
+                                                <label class="col-md-6">Pescoço</label>
+                                                <div class="col-md-6">
+                                                    <input type="text" class="form-control" name="pescoco">
+                                                </div>
+                                            </div>
+                                            <div class="form-group col-md-12">
+                                                <label class="col-md-6">Punho</label>
+                                                <div class="col-md-6">
+                                                    <input type="text" class="form-control" name="punho">
+                                                </div>
+                                            </div>
                                         </div>
-                                        <div class="timeline-footer">
-                                            <a class="btn btn-primary btn-xs">Read more</a>
-                                            <a class="btn btn-danger btn-xs">Delete</a>
+                                        <div class="col-md-6">
+                                            <div class="form-group col-md-12">
+                                                <label class="col-md-6">Ombro</label>
+                                                <div class="col-md-6">
+                                                    <input type="text" class="form-control" name="ombro">
+                                                </div>
+                                            </div>
+                                            <div class="form-group col-md-12">
+                                                <label class="col-md-6">Peitoral</label>
+                                                <div class="col-md-6">
+                                                    <input type="text" class="form-control" name="peitoral">
+                                                </div>
+                                            </div>
+                                            <div class="form-group col-md-12">
+                                                <label class="col-md-6">Cintura</label>
+                                                <div class="col-md-6">
+                                                    <input type="text" class="form-control" name="cintura">
+                                                </div>
+                                            </div>
+                                            <div class="form-group col-md-12">
+                                                <label class="col-md-6">Abdomen</label>
+                                                <div class="col-md-6">
+                                                    <input type="text" class="form-control" name="abdomen">
+                                                </div>
+                                            </div>
+                                            <div class="form-group col-md-12">
+                                                <label class="col-md-6">Quadril</label>
+                                                <div class="col-md-6">
+                                                    <input type="text" class="form-control" name="quadril">
+                                                </div>
+                                            </div>
+                                            <div class="form-group col-md-12">
+                                                <label class="col-md-6">Panturrilha direita</label>
+                                                <div class="col-md-6">
+                                                    <input type="text" class="form-control" name="panturrilhaDireita">
+                                                </div>
+                                            </div>
+                                            <div class="form-group col-md-12">
+                                                <label class="col-md-6">Panturrilha esquerda</label>
+                                                <div class="col-md-6">
+                                                    <input type="text" class="form-control" name="panturrilhaEsquerda">
+                                                </div>
+                                            </div>
+                                            <div class="form-group col-md-12">
+                                                <label class="col-md-6">Pescoço</label>
+                                                <div class="col-md-6">
+                                                    <input type="text" class="form-control" name="pescoco">
+                                                </div>
+                                            </div>
+                                            <div class="form-group col-md-12">
+                                                <label class="col-md-6">Punho</label>
+                                                <div class="col-md-6">
+                                                    <input type="text" class="form-control" name="punho">
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
-                                </li>
-                                <!-- END timeline item -->
-                                <!-- timeline item -->
-                                <li>
-                                    <i class="fa fa-user bg-aqua"></i>
-
-                                    <div class="timeline-item">
-                                        <span class="time"><i class="fa fa-clock-o"></i> 5 mins ago</span>
-
-                                        <h3 class="timeline-header no-border"><a href="#">Sarah Young</a> accepted your friend request
-                                        </h3>
-                                    </div>
-                                </li>
-                                <!-- END timeline item -->
-                                <!-- timeline item -->
-                                <li>
-                                    <i class="fa fa-comments bg-yellow"></i>
-
-                                    <div class="timeline-item">
-                                        <span class="time"><i class="fa fa-clock-o"></i> 27 mins ago</span>
-
-                                        <h3 class="timeline-header"><a href="#">Jay White</a> commented on your post</h3>
-
-                                        <div class="timeline-body">
-                                            Take me to your leader!
-                                            Switzerland is small and neutral!
-                                            We are more like Germany, ambitious and misunderstood!
+                                </div>
+                            </div>
+                            <div class="panel panel-default">
+                                <div class="panel-heading" role="tab" id="diametrosOsseos">
+                                    <h4 class="panel-title">
+                                        <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#conteudoDiametrosOsseos" aria-expanded="false" aria-controls="conteudoDiametrosOsseos">
+                                            Diâmetros Ósseos
+                                        </a>
+                                    </h4>
+                                </div>
+                                <div id="conteudoDiametrosOsseos" class="panel-collapse collapse" role="tabpanel" aria-labelledby="diametrosOsseos">
+                                    <div class="panel-body">
+                                        <div class="col-md-6">
+                                            <div class="form-group col-md-12">
+                                                <label class="col-md-6">Punho</label>
+                                                <div class="col-md-6">
+                                                    <input type="text" class="form-control" name="punho">
+                                                </div>
+                                            </div>
                                         </div>
-                                        <div class="timeline-footer">
-                                            <a class="btn btn-warning btn-flat btn-xs">View comment</a>
+                                        <div class="col-md-6">
+                                            <div class="form-group col-md-12">
+                                                <label class="col-md-6">Fêmur</label>
+                                                <div class="col-md-6">
+                                                    <input type="text" class="form-control" name="femur">
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
-                                </li>
-                                <!-- END timeline item -->
-                                <!-- timeline time label -->
-                                <li class="time-label">
-                                    <span class="bg-green">
-                                        3 Jan. 2014
-                                    </span>
-                                </li>
-                                <!-- /.timeline-label -->
-                                <!-- timeline item -->
-                                <li>
-                                    <i class="fa fa-camera bg-purple"></i>
-
-                                    <div class="timeline-item">
-                                        <span class="time"><i class="fa fa-clock-o"></i> 2 days ago</span>
-
-                                        <h3 class="timeline-header"><a href="#">Mina Lee</a> uploaded new photos</h3>
-
-                                        <div class="timeline-body">
-                                            <img src="http://placehold.it/150x100" alt="..." class="margin">
-                                            <img src="http://placehold.it/150x100" alt="..." class="margin">
-                                            <img src="http://placehold.it/150x100" alt="..." class="margin">
-                                            <img src="http://placehold.it/150x100" alt="..." class="margin">
-                                        </div>
+                                </div>
+                            </div>
+                            <div class="panel panel-default">
+                                <div class="panel-heading" role="tab" id="composicaoCorporal">
+                                    <h4 class="panel-title">
+                                        <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#conteudoComposicaoCorporal" aria-expanded="false" aria-controls="conteudoComposicaoCorporal">
+                                            Composição Corporal
+                                        </a>
+                                    </h4>
+                                </div>
+                                <div id="conteudoComposicaoCorporal" class="panel-collapse collapse" role="tabpanel" aria-labelledby="composicaoCorporal">
+                                    <div class="panel-body">
                                     </div>
-                                </li>
-                                <!-- END timeline item -->
-                                <li>
-                                    <i class="fa fa-clock-o bg-gray"></i>
-                                </li>
-                            </ul>
+                                </div>
+                            </div>
                         </div>
-                        <!-- INÍCIO ABA AVALIAÇÃO ANTROPOMÉTRICA -->
+                        </div>
+                        <!-- FIM ABA AVALIAÇÃO ANTROPOMÉTRICA -->
 
                         <div class="tab-pane" id="settings">
                             <form class="form-horizontal">
