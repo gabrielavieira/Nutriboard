@@ -42,5 +42,14 @@
             <div class="ajBtnsemlabel"></div>
             <button id="btnSalvarPreCadastro" type="button" class="btn btn-danger">Salvar</button>
         </div>
+        <div class="col-md-3">
+        <label class="control-label">Select File</label>
+        <input id="input-4" name="input4[]" type="file" multiple class="file-loading">
+        <script>
+            $(document).on('ready', function() {
+                $("#input-4").fileinput({showCaption: false});
+            });
+        </script>
+        </div>
     </form>
 </div>

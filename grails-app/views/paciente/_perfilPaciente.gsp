@@ -14,13 +14,13 @@
 
                         <ul class="list-group list-group-unbordered">
                             <li class="list-group-item">
-                                <b>Idade</b> <a class="pull-right">${paciente?.getIdade()} anos</a>
+                                <b>Idade</b> <a class="pull-right"> ${paciente?.getIdade()} anos</a>
                             </li>
                             <li class="list-group-item">
-                                <b>Altura</b> <a class="pull-right">1,59 m</a>
+                                <b>Altura</b> <a class="pull-right"> ${altura ? altura : ""} m</a>
                             </li>
                             <li class="list-group-item">
-                                <b>Peso</b> <a class="pull-right">55,00 Kg</a>
+                                <b>Peso</b> <a class="pull-right"> ${peso ? peso : ""} Kg</a>
                             </li>
                         </ul>
 
@@ -36,7 +36,8 @@
                     <ul class="nav nav-tabs">
                         <li class="active"><a href="#anamnese" data-toggle="tab" aria-expanded="true">Anamnese</a></li>
                         <li class=""><a href="#avaliacaoAntropometrica" data-toggle="tab" aria-expanded="false">Avaliação Antropométrica</a></li>
-                        <li class=""><a href="#settings" data-toggle="tab" aria-expanded="false">Settings</a></li>
+                        <li class=""><a href="#planoAlimentar" data-toggle="tab" aria-expanded="false">Plano Alimentar</a></li>
+                        <li class=""><a href="#recordatorioAlimentar" data-toggle="tab" aria-expanded="false">Recordatório Alimentar</a></li>
                     </ul>
                     <div class="tab-content">
                         <!-- INÍCIO ABA ANAMNESE -->
@@ -166,7 +167,6 @@
                                                     <input type="text" class="form-control" name="panturrilhaDireita">
                                                 </div>
                                             </div>
-
                                             <div class="form-group col-md-12">
                                                 <label class="col-md-6">Panturrilha esquerda</label>
                                                 <div class="col-md-6">
@@ -188,57 +188,57 @@
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group col-md-12">
-                                                <label class="col-md-6">Ombro</label>
+                                                <label class="col-md-6">Coxa Direita</label>
                                                 <div class="col-md-6">
-                                                    <input type="text" class="form-control" name="ombro">
+                                                    <input type="text" class="form-control" name="coxaDireita">
                                                 </div>
                                             </div>
                                             <div class="form-group col-md-12">
-                                                <label class="col-md-6">Peitoral</label>
+                                                <label class="col-md-6">Coxa Esquerda</label>
                                                 <div class="col-md-6">
-                                                    <input type="text" class="form-control" name="peitoral">
+                                                    <input type="text" class="form-control" name="coxaEsquerda">
                                                 </div>
                                             </div>
                                             <div class="form-group col-md-12">
-                                                <label class="col-md-6">Cintura</label>
+                                                <label class="col-md-6">Coxa Próximal Direita</label>
                                                 <div class="col-md-6">
-                                                    <input type="text" class="form-control" name="cintura">
+                                                    <input type="text" class="form-control" name="coxaProximalDireita">
                                                 </div>
                                             </div>
                                             <div class="form-group col-md-12">
-                                                <label class="col-md-6">Abdomen</label>
+                                                <label class="col-md-6">Coxa Proximal Esquerda</label>
                                                 <div class="col-md-6">
-                                                    <input type="text" class="form-control" name="abdomen">
+                                                    <input type="text" class="form-control" name="coxaProximalEsquerda">
                                                 </div>
                                             </div>
                                             <div class="form-group col-md-12">
-                                                <label class="col-md-6">Quadril</label>
+                                                <label class="col-md-6">Braço Relachado Direito</label>
                                                 <div class="col-md-6">
-                                                    <input type="text" class="form-control" name="quadril">
+                                                    <input type="text" class="form-control" name="bracoRelachadoDireito">
                                                 </div>
                                             </div>
                                             <div class="form-group col-md-12">
-                                                <label class="col-md-6">Panturrilha direita</label>
+                                                <label class="col-md-6">Braço Relachado Esquerdo</label>
                                                 <div class="col-md-6">
-                                                    <input type="text" class="form-control" name="panturrilhaDireita">
+                                                    <input type="text" class="form-control" name="bracoRelachadoEsquerdo">
                                                 </div>
                                             </div>
                                             <div class="form-group col-md-12">
-                                                <label class="col-md-6">Panturrilha esquerda</label>
+                                                <label class="col-md-6">Braço Contraído Direito</label>
                                                 <div class="col-md-6">
-                                                    <input type="text" class="form-control" name="panturrilhaEsquerda">
+                                                    <input type="text" class="form-control" name="bracoContraidoDireito">
                                                 </div>
                                             </div>
                                             <div class="form-group col-md-12">
-                                                <label class="col-md-6">Pescoço</label>
+                                                <label class="col-md-6">Braço Contraído Esquerdo</label>
                                                 <div class="col-md-6">
-                                                    <input type="text" class="form-control" name="pescoco">
+                                                    <input type="text" class="form-control" name="bracoContraidoEsquerdo">
                                                 </div>
                                             </div>
                                             <div class="form-group col-md-12">
-                                                <label class="col-md-6">Punho</label>
+                                                <label class="col-md-6">Antebraço</label>
                                                 <div class="col-md-6">
-                                                    <input type="text" class="form-control" name="punho">
+                                                    <input type="text" class="form-control" name="antebraco">
                                                 </div>
                                             </div>
                                         </div>
@@ -284,6 +284,88 @@
                                 </div>
                                 <div id="conteudoComposicaoCorporal" class="panel-collapse collapse" role="tabpanel" aria-labelledby="composicaoCorporal">
                                     <div class="panel-body">
+                                        <div class="col-md-6">
+                                            <div class="form-group col-md-12">
+                                                <label class="col-md-6">IMC</label>
+                                                <div class="col-md-6">
+                                                    <input type="text" class="form-control" name="IMC">
+                                                </div>
+                                            </div>
+                                            <div class="form-group col-md-12">
+                                                <label class="col-md-6">Massa Gorda</label>
+                                                <div class="col-md-6">
+                                                    <input type="text" class="form-control" name="massaGorda">
+                                                </div>
+                                            </div>
+                                            <div class="form-group col-md-12">
+                                                <label class="col-md-6">Massa Magra</label>
+                                                <div class="col-md-6">
+                                                    <input type="text" class="form-control" name="massaMagra">
+                                                </div>
+                                            </div>
+                                            <div class="form-group col-md-12">
+                                                <label class="col-md-6">Água Corporal</label>
+                                                <div class="col-md-6">
+                                                    <input type="text" class="form-control" name="aguaCorporal">
+                                                </div>
+                                            </div>
+                                            <div class="form-group col-md-12">
+                                                <label class="col-md-6">Peso Ósseo</label>
+                                                <div class="col-md-6">
+                                                    <input type="text" class="form-control" name="pesoOsseo">
+                                                </div>
+                                            </div>
+                                            <div class="form-group col-md-12">
+                                                <label class="col-md-6">Peso Muscular</label>
+                                                <div class="col-md-6">
+                                                    <input type="text" class="form-control" name="pesoMuscular">
+                                                </div>
+                                            </div>
+                                            <div class="form-group col-md-12">
+                                                <label class="col-md-6">Idade Metabólica</label>
+                                                <div class="col-md-6">
+                                                    <input type="text" class="form-control" name="idadeMetabolica">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group col-md-12">
+                                                <label class="col-md-6">Peso Ideal</label>
+                                                <div class="col-md-6">
+                                                    <input type="text" class="form-control" name="pesoIdeal">
+                                                </div>
+                                            </div>
+                                            <div class="form-group col-md-12">
+                                                <label class="col-md-6">Massa Gorda</label>
+                                                <div class="col-md-6">
+                                                    <input type="text" class="form-control" name="massaGorda">
+                                                </div>
+                                            </div>
+                                            <div class="form-group col-md-12">
+                                                <label class="col-md-6">Massa Magra</label>
+                                                <div class="col-md-6">
+                                                    <input type="text" class="form-control" name="massaMagra">
+                                                </div>
+                                            </div>
+                                            <div class="form-group col-md-12">
+                                                <label class="col-md-6">Água Corporal</label>
+                                                <div class="col-md-6">
+                                                    <input type="text" class="form-control" name="aguaCorporal">
+                                                </div>
+                                            </div>
+                                            <div class="form-group col-md-12">
+                                                <label class="col-md-6">Peso Residual</label>
+                                                <div class="col-md-6">
+                                                    <input type="text" class="form-control" name="pesoResidual">
+                                                </div>
+                                            </div>
+                                            <div class="form-group col-md-12">
+                                                <label class="col-md-6">Gordura Visceral</label>
+                                                <div class="col-md-6">
+                                                    <input type="text" class="form-control" name="gorduraVisceral">
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -291,59 +373,18 @@
                         </div>
                         <!-- FIM ABA AVALIAÇÃO ANTROPOMÉTRICA -->
 
-                        <div class="tab-pane" id="settings">
-                            <form class="form-horizontal">
-                                <div class="form-group">
-                                    <label for="inputName" class="col-sm-2 control-label">Name</label>
+                        <!-- INÍCIO ABA PLANO ALIMENTAR -->
+                        <div class="tab-pane" id="planoAlimentar">
 
-                                    <div class="col-sm-10">
-                                        <input type="email" class="form-control" id="inputName" placeholder="Name">
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="inputEmail" class="col-sm-2 control-label">Email</label>
-
-                                    <div class="col-sm-10">
-                                        <input type="email" class="form-control" id="inputEmail" placeholder="Email">
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="inputName" class="col-sm-2 control-label">Name</label>
-
-                                    <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="inputName" placeholder="Name">
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="inputExperience" class="col-sm-2 control-label">Experience</label>
-
-                                    <div class="col-sm-10">
-                                        <textarea class="form-control" id="inputExperience" placeholder="Experience"></textarea>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="inputSkills" class="col-sm-2 control-label">Skills</label>
-
-                                    <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="inputSkills" placeholder="Skills">
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <div class="col-sm-offset-2 col-sm-10">
-                                        <div class="checkbox">
-                                            <label>
-                                                <input type="checkbox"> I agree to the <a href="#">terms and conditions</a>
-                                            </label>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <div class="col-sm-offset-2 col-sm-10">
-                                        <button type="submit" class="btn btn-danger">Submit</button>
-                                    </div>
-                                </div>
-                            </form>
                         </div>
+                        <!-- INÍCIO ABA PLANO ALIMENTAR -->
+
+                        <!-- INÍCIO ABA RECORDATORIO ALIMENTAR -->
+                        <div class="tab-pane" id="recordatorioAlimentar">
+
+                        </div>
+                        <!-- INÍCIO ABA RECORDATORIO ALIMENTAR -->
+
                         <!-- /.tab-pane -->
                     </div>
                     <!-- /.tab-content -->

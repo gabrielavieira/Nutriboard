@@ -59,7 +59,7 @@ class PacienteController extends CRUDController{
         }
 
         println entityInstance.errors
-        model = editaModelDoSave( model )
+        model.put( "paciente", entityInstance )
 
         render(template: "perfilPaciente", model: model)
     }
