@@ -7,7 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
-    <div class="wrapper">
+    <div class="wrapper ajWrapper">
         <!-- Content Wrapper. Contains page content -->
         <div class="content-wrapper ajContentWrapper">
             <!-- Main content -->

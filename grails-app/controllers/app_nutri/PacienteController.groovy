@@ -47,7 +47,7 @@ class PacienteController extends CRUDController{
                 if(edit){
                     flash.message = message(code: 'default.updated.message')
                 }else{
-                    flash.message = message(code: 'default.created.message')
+                    flash.message = message(code: 'paciente.msgInstrucaoAposSalvar.label')
                 }
             }else{
                 if(edit){

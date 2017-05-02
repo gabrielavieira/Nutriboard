@@ -27,7 +27,9 @@
 
 .ajNavBar{
     border-radius: 0px;
-    margin-bottom: 0px;
+    margin-bottom: 0;
+    background-color: #3c8dbc;
+    border-color: #3c8dbc;
 }
 
 .ajMainSideBar{
@@ -37,3 +39,22 @@
 .ajContentWrapper{
     margin-left: 0px;
 }
+
+.ajWrapper{
+    overflow-x: hidden;
+    overflow-y: hidden;
+}
+
+.navbar-default .navbar-brand {
+    color: #fff;
+}
+
+.navbar-default .navbar-nav > li > a {
+    color: #fff;
+}
+
+/*.navbar-default .navbar-nav > li > a:hover, .navbar-default .navbar-nav > li > a:focus {*/
+    /*background-color: #FFFF00;*/
+    /*color: #FFC0CB;*/
+/*}*/
+

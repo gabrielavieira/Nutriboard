@@ -16,7 +16,7 @@
     <g:layoutHead/>
 </head>
 <body>
-    <nav class="navbar navbar-inverse ajNavBar">
+    <nav class="navbar navbar-default ajNavBar">
         <div class="container-fluid">
             <!-- Brand and toggle get grouped for better mobile display -->
             <div class="navbar-header">
