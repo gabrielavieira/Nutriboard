@@ -4,31 +4,82 @@
         <div class="row">
             <div class="col-md-3">
                 <!-- Profile Image -->
-                <div class="box box-primary">
-                    <div class="box-body box-profile">
-                        <img class="profile-user-img img-responsive img-circle" src="${resource(dir: "images/", file: "circulo.png")}" alt="User profile picture">
+                <div class="col-md-12 nopad">
+                    <div class="box box-primary">
+                        <div class="box-body box-profile">
+                            <img class="profile-user-img img-responsive img-circle" src="${resource(dir: "images/", file: "circulo.png")}" alt="User profile picture">
 
-                        <h3 class="profile-username text-center">${paciente?.nome}</h3>
+                            <h3 class="profile-username text-center">${paciente?.nome}</h3>
 
-                        <p class="text-muted text-center"> Perfil do Paciente </p>
+                            <p class="text-muted text-center">
+                                <span class="label label-warning"><g:message code="ennumeration.perfilPaciente.${paciente?.perfilPaciente}"/></span>
+                            </p>
 
-                        <ul class="list-group list-group-unbordered">
-                            <li class="list-group-item">
-                                <b>Idade</b> <a class="pull-right"> ${paciente?.getIdade()} anos</a>
-                            </li>
-                            <li class="list-group-item">
-                                <b>Altura</b> <a class="pull-right"> ${altura ? altura : ""} m</a>
-                            </li>
-                            <li class="list-group-item">
-                                <b>Peso</b> <a class="pull-right"> ${peso ? peso : ""} Kg</a>
-                            </li>
-                        </ul>
+                            <ul class="list-group list-group-unbordered">
+                                <li class="list-group-item">
+                                    <b>Idade</b> <a class="pull-right"> ${paciente?.getIdade()} anos</a>
+                                </li>
+                                <li class="list-group-item">
+                                    <b>Altura</b> <a class="pull-right"> ${altura ? altura : ""} m</a>
+                                </li>
+                                <li class="list-group-item">
+                                    <b>Peso</b> <a class="pull-right"> ${peso ? peso : ""} Kg</a>
+                                </li>
+                            </ul>
 
-                        <a href="#" class="btn btn-primary btn-block"><b>Follow</b></a>
+                            <a href="#" class="btn btn-primary btn-block"><b>OK</b></a>
+                        </div>
+                        <!-- /.box-body -->
                     </div>
-                    <!-- /.box-body -->
+                    <!-- /.box -->
                 </div>
-                <!-- /.box -->
+                %{--<div class="col-md-12 nopad">--}%
+                    %{--<div class="box box-default">--}%
+                        %{--<div class="box-header with-border">--}%
+                            %{--<h3 class="box-title">Composição Corporal</h3>--}%
+
+                            %{--<div class="box-tools pull-right">--}%
+                                %{--<button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>--}%
+                                %{--</button>--}%
+                                %{--<button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>--}%
+                            %{--</div>--}%
+                        %{--</div>--}%
+                        %{--<!-- /.box-header -->--}%
+                        %{--<div class="box-body">--}%
+                            %{--<div class="row">--}%
+                                %{--<div class="col-md-8">--}%
+                                    %{--<div class="chart-responsive">--}%
+                                        %{--<canvas id="pieChart" height="180" width="205" style="width: 205px; height: 180px;"></canvas>--}%
+                                    %{--</div>--}%
+                                    %{--<!-- ./chart-responsive -->--}%
+                                %{--</div>--}%
+                                %{--<!-- /.col -->--}%
+                                %{--<div class="col-md-4">--}%
+                                    %{--<ul class="chart-legend clearfix">--}%
+                                        %{--<li><i class="fa fa-circle-o text-red"></i> Peso Gordo</li>--}%
+                                        %{--<li><i class="fa fa-circle-o text-green"></i> Peso Residual</li>--}%
+                                        %{--<li><i class="fa fa-circle-o text-yellow"></i> Peso Magro</li>--}%
+                                        %{--<li><i class="fa fa-circle-o text-aqua"></i> Peso Ósseo</li>--}%
+                                    %{--</ul>--}%
+                                %{--</div>--}%
+                                %{--<!-- /.col -->--}%
+                            %{--</div>--}%
+                            %{--<!-- /.row -->--}%
+                        %{--</div>--}%
+                        %{--<!-- /.box-body -->--}%
+                        %{--<div class="box-footer no-padding">--}%
+                            %{--<ul class="nav nav-pills nav-stacked">--}%
+                                %{--<li><a href="#">United States of America--}%
+                                    %{--<span class="pull-right text-red"><i class="fa fa-angle-down"></i> 12%</span></a></li>--}%
+                                %{--<li><a href="#">India <span class="pull-right text-green"><i class="fa fa-angle-up"></i> 4%</span></a>--}%
+                                %{--</li>--}%
+                                %{--<li><a href="#">China--}%
+                                    %{--<span class="pull-right text-yellow"><i class="fa fa-angle-left"></i> 0%</span></a></li>--}%
+                            %{--</ul>--}%
+                        %{--</div>--}%
+                        %{--<!-- /.footer -->--}%
+                    %{--</div>--}%
+                %{--</div>--}%
             </div>
             <!-- /.col -->
             <div class="col-md-9">
@@ -42,78 +93,92 @@
                     <div class="tab-content">
                         <!-- INÍCIO ABA ANAMNESE -->
                         <div class="tab-pane active" id="anamnese">
-                            <div class="panel-group" role="tablist" aria-multiselectable="true">
-                                <div class="panel panel-default">
-                                    <div class="panel-heading" role="tab" id="headingOne">
-                                        <h4 class="panel-title">
-                                            <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                                Hábitos de Vida
-                                            </a>
-                                        </h4>
-                                    </div>
-                                    <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
-                                        <div class="panel-body">
-                                            <div class="checkbox">
-                                                <label>
-                                                    <input type="checkbox" name="isFumante" ${anamneseAtual?.habitoDeVida?.isFumante ?  'checked' : ''}> Fumante
-                                                </label>
-                                            </div>
-                                            <div class="checkbox">
-                                                <label>
-                                                    <input type="checkbox" name="isAlcoolatra" ${anamneseAtual?.habitoDeVida?.isAlcoolatra ?  'checked' : ''}> Ingere bebida alcoólica
-                                                </label>
-                                            </div>
+                            <form name="formAnamnese">
+                                <div class="panel-group" role="tablist" aria-multiselectable="true">
+                                    <div class="form-group col-md-3 data nopad">
+                                        <div class="form-group data">
+                                            <label for="dtAnamnese">Data</label>
+                                            <input type="text" class="form-control" id="dtAnamnese" name="dtAnamnese">
                                         </div>
                                     </div>
-                                </div>
-                                <div class="panel panel-default">
-                                    <div class="panel-heading" role="tab" id="headingTwo">
-                                        <h4 class="panel-title">
-                                            <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                                                Patologia
-                                            </a>
-                                        </h4>
+                                    <div class="form-group">
+                                        <div class="ajBtnsemlabel"></div>
+                                        <button id="btnSalvarAnamnese" type="button" class="btn btn-danger">Salvar</button>
                                     </div>
-                                    <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
-                                        <div class="panel-body">
-                                            <g:each in="${patologias}" var="patologia">
-                                                <div class="col-md-2">
-                                                    <div class="checkbox">
-                                                        <label>
-                                                            <input type="checkbox" value="${patologia}" name="patologias" ${anamneseAtual?.patologias?.contains(patologia) ? 'checked' : ''}> <g:message code="paciente.patologia.${patologia}.label"/>
-                                                        </label>
-                                                    </div>
+                                </div>
+                                <div class="panel-group" role="tablist" aria-multiselectable="true">
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading" role="tab" id="headingOne">
+                                            <h4 class="panel-title">
+                                                <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                                    Hábitos de Vida
+                                                </a>
+                                            </h4>
+                                        </div>
+                                        <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+                                            <div class="panel-body">
+                                                <div class="checkbox">
+                                                    <label>
+                                                        <input type="checkbox" name="isFumante" ${anamneseAtual?.habitoDeVida?.isFumante ?  'checked' : ''}> Fumante
+                                                    </label>
                                                 </div>
-                                            </g:each>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="panel panel-default">
-                                    <div class="panel-heading" role="tab" id="headingThree">
-                                        <h4 class="panel-title">
-                                            <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                                                Hábitos Alimentares
-                                            </a>
-                                        </h4>
-                                    </div>
-                                    <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
-                                        <div class="panel-body">
-                                            <div class="form-group">
-                                                <label for="suplementos"><g:message code="paciente.habitosAlimentares.suplementos.label"/></label>
-                                                <textarea class="form-control" rows="5" id="suplementos" name="suplementos">${anamneseAtual?.suplementos}</textarea>
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="alergiaAlimentar"><g:message code="paciente.habitosAlimentares.alergiaAlimentar.label"/></label>
-                                                <textarea class="form-control" rows="5" id="alergiaAlimentar" name="alergiaAlimentar">${anamneseAtual?.alergiaAlimentar}</textarea>
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="intoleranciaAlimentar"><g:message code="paciente.habitosAlimentares.intoleranciaAlimentar.label"/></label>
-                                                <textarea class="form-control" rows="5" id="intoleranciaAlimentar" name="intoleranciaAlimentar">${anamneseAtual?.intoleranciaAlimentar}</textarea>
+                                                <div class="checkbox">
+                                                    <label>
+                                                        <input type="checkbox" name="isAlcoolatra" ${anamneseAtual?.habitoDeVida?.isAlcoolatra ?  'checked' : ''}> Ingere bebida alcoólica
+                                                    </label>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading" role="tab" id="headingTwo">
+                                            <h4 class="panel-title">
+                                                <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                                    Patologia
+                                                </a>
+                                            </h4>
+                                        </div>
+                                        <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+                                            <div class="panel-body">
+                                                <g:each in="${patologias}" var="patologia">
+                                                    <div class="col-md-2">
+                                                        <div class="checkbox">
+                                                            <label>
+                                                                <input type="checkbox" value="${patologia}" name="patologias" ${anamneseAtual?.patologias?.contains(patologia) ? 'checked' : ''}> <g:message code="paciente.patologia.${patologia}.label"/>
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                </g:each>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading" role="tab" id="headingThree">
+                                            <h4 class="panel-title">
+                                                <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                                    Hábitos Alimentares
+                                                </a>
+                                            </h4>
+                                        </div>
+                                        <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+                                            <div class="panel-body">
+                                                <div class="form-group">
+                                                    <label for="suplementos"><g:message code="paciente.habitosAlimentares.suplementos.label"/></label>
+                                                    <textarea class="form-control" rows="5" id="suplementos" name="suplementos">${anamneseAtual?.suplementos}</textarea>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="alergiaAlimentar"><g:message code="paciente.habitosAlimentares.alergiaAlimentar.label"/></label>
+                                                    <textarea class="form-control" rows="5" id="alergiaAlimentar" name="alergiaAlimentar">${anamneseAtual?.alergiaAlimentar}</textarea>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="intoleranciaAlimentar"><g:message code="paciente.habitosAlimentares.intoleranciaAlimentar.label"/></label>
+                                                    <textarea class="form-control" rows="5" id="intoleranciaAlimentar" name="intoleranciaAlimentar">${anamneseAtual?.intoleranciaAlimentar}</textarea>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
+                            </form>
                         </div>
                         <!-- FIM ABA ANAMNESE -->
 
@@ -377,13 +442,13 @@
                         <div class="tab-pane" id="planoAlimentar">
 
                         </div>
-                        <!-- INÍCIO ABA PLANO ALIMENTAR -->
+                        <!-- FIM ABA PLANO ALIMENTAR -->
 
                         <!-- INÍCIO ABA RECORDATORIO ALIMENTAR -->
                         <div class="tab-pane" id="recordatorioAlimentar">
 
                         </div>
-                        <!-- INÍCIO ABA RECORDATORIO ALIMENTAR -->
+                        <!-- FIM ABA RECORDATORIO ALIMENTAR -->
 
                         <!-- /.tab-pane -->
                     </div>

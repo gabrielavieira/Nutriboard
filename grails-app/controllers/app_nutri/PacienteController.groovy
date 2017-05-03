@@ -1,6 +1,8 @@
 package app_nutri
 
 import enums.Genero
+import enums.PerfilPaciente
+import org.springframework.web.multipart.commons.CommonsMultipartFile
 
 import java.text.DateFormat
 import java.text.SimpleDateFormat
@@ -26,9 +28,18 @@ class PacienteController extends CRUDController{
     @Override
     beforeSave(entityInstance,model){
         print params
-        DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+        DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy")
+
+        if( params.id )
+            entityInstance.perfilPaciente = getPerfilPaciente()
+        else
+            entityInstance.perfilPaciente = PerfilPaciente.INCOMPLETO
+
         if( params.dtNascimento )
             entityInstance.dataNascimento = (Date)formatter.parse(params.dtNascimento)
+
+        if (params.imgPerfilPaciente)
+            entityInstance.imagemPerfil = getImagemPerfil()
 
         entityInstance.ativo = true
     }
@@ -76,8 +87,11 @@ class PacienteController extends CRUDController{
     edit() {
         def entityInstance = entity.get(params.id)
         def model = [:]
+
+        List anamneses = new ArrayList<>( Anamnese.findAllByPaciente( entityInstance, [sort: "data"] ) )
+
         model.put("paciente", entityInstance)
-//        model.put("anamneseAtual", Anamnese.findAllByPaciente( entityInstance, [sort: "data"] )?.first() )
+        model.put("anamneseAtual", anamneses != null && anamneses.size() > 0 ? anamneses.first() : null )
         model.put("template", "perfilPaciente" )
 
         render( view: "index", model: editaModelPadrao(model) )
@@ -96,6 +110,47 @@ class PacienteController extends CRUDController{
         model.put("patologias", Anamnese.getPatologiasDisponiveis() )
         Genero g
         return model
+    }
+
+    def getArquivoPorParametro(){
+        print params
+        if(params.imgPerfilPaciente){
+            Arquivo arquivo = new Arquivo()
+            CommonsMultipartFile img = params.imgPerfilPaciente
+            arquivo.setArquivo(img.bytes)
+            arquivo.setNomeArquivo(img.getName())
+            arquivo.setTamanho(img.size)
+            arquivo.setTipoArquivo(img.contentType)
+            return arquivo
+        }else{
+            return null
+        }
+    }
+
+    def getImagemPerfil(){
+        Arquivo fileUploaded = getArquivoPorParametro()
+        Paciente paciente = Paciente.get(params.id)
+        Arquivo imagemPerfil = paciente?.imagemPerfil
+        if(fileUploaded) {
+            if(imagemPerfil){
+                imagemPerfil?.arquivo = fileUploaded?.arquivo
+                imagemPerfil?.tipoArquivo = fileUploaded?.tipoArquivo
+                imagemPerfil?.tamanho = fileUploaded?.tamanho
+                imagemPerfil?.nomeArquivo = fileUploaded?.nomeArquivo
+            }else{
+                imagemPerfil = new Arquivo()
+                imagemPerfil?.arquivo = fileUploaded?.arquivo
+                imagemPerfil?.tipoArquivo = fileUploaded?.tipoArquivo
+                imagemPerfil?.tamanho = fileUploaded?.tamanho
+                imagemPerfil?.nomeArquivo = fileUploaded?.nomeArquivo
+            }
+        }
+        return imagemPerfil
+    }
+
+    def getPerfilPaciente(){
+        //TODO
+        return PerfilPaciente.INCOMPLETO
     }
 
 }

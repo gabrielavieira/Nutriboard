@@ -1,6 +1,7 @@
 package app_nutri
 
 import enums.Genero
+import enums.PerfilPaciente
 
 import java.text.DateFormat
 import java.text.SimpleDateFormat
@@ -13,12 +14,15 @@ class Paciente {
     Date dataNascimento
     String email
     Boolean ativo
+    Arquivo imagemPerfil
+    PerfilPaciente perfilPaciente
 
     static hasMany = [avaliacoesAntropometricas : AvaliacaoAntropometrica, anamneses: Anamnese]
 
     static constraints = {
         avaliacoesAntropometricas nullable: true
         anamneses nullable: true
+        imagemPerfil nullable: true
     }
 
     static mapping = {
@@ -26,13 +30,16 @@ class Paciente {
     }
 
     String getDataFormatada(){
-        DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+        DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy")
         return formatter.format(dataNascimento != null ? dataNascimento : new Date()).toString()
     }
 
     Integer getIdade() {
-        long ageInMillis = new Date().getTime() - dataNascimento.getTime()
-        Date age = new Date(ageInMillis)
-        return age.getYear()
+        Date now = new Date()
+        long timeBetween = now.getTime() - dataNascimento.getTime()
+        double yearsBetween = timeBetween / 3.156e+10
+        Integer age = (Integer) Math.floor(yearsBetween)
+
+        return age
     }
 }

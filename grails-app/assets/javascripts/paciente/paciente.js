@@ -5,10 +5,12 @@ window.onload = function()
     jQuery(document).delegate( "#btnSalvarPreCadastro", "click", salvarPreCadastro );
 
     carregaDatepicker();
+    $("#inputUploadArquivo").fileinput();
 
     jQuery( document ).ajaxStop( function()
     {
         carregaDatepicker();
+        $("#inputUploadArquivo").fileinput();
     });
 };
 
