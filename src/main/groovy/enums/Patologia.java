@@ -1,0 +1,22 @@
+package enums;
+
+public enum Patologia {
+    DIABETES,
+    OSTEOPOROSE,
+    ENDOCRINO,
+    HIPERTENSÃO,
+    CARDIACO,
+    RGE,
+    CIRCULATORIO,
+    DISLIPIDEMIA,
+    CANCER,
+    HIPOGLICEMIA,
+    ANSIEDADE,
+    RENAL,
+    HERPES,
+    DEPRESSAO,
+    HEPATITE,
+    GASTRITE,
+    HIPOTIREOIDISMO,
+    HIPERTIREOIDISMO
+}

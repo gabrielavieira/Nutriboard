@@ -1,33 +1,14 @@
 package app_nutri
 
-class Anamnese {
+import enums.Patologia
 
-    static enum Patologia{
-        DIABETES,
-        OSTEOPOROSE,
-        ENDOCRINO,
-        HIPERTENSÃO,
-        CARDIACO,
-        RGE,
-        CIRCULATORIO,
-        DISLIPIDEMIA,
-        CANCER,
-        HIPOGLICEMIA,
-        ANSIEDADE,
-        RENAL,
-        HERPES,
-        DEPRESSAO,
-        HEPATITE,
-        GASTRITE,
-        HIPOTIREOIDISMO,
-        HIPERTIREOIDISMO
-    }
+class Anamnese {
 
     List<Patologia> patologias
     String suplementos
     String alergiaAlimentar
     String intoleranciaAlimentar
-    Date data = new Date()
+    Date data
     HabitoDeVida habitoDeVida
 
     static belongsTo = [paciente: Paciente]
@@ -42,10 +23,6 @@ class Anamnese {
 
     static mapping = {
         habitoDeVida cascade: "save-update"
-    }
-
-    static getPatologiasDisponiveis(){
-        return Patologia.values()
     }
 
 }

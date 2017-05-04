@@ -53,7 +53,7 @@
         <div class="col-md-2">
             <div class="form-group">
                 <label for="peso"> Panturrilha Esquerda </label>
-                <input type="text" id="parturrilhaEsquerda" name="parturrilhaEsquerda" class="form-control">
+                <input type="text" id="panturrilhaEsquerda" name="panturrilhaEsquerda" class="form-control">
             </div>
         </div>
         <div class="col-md-2">

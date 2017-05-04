@@ -1,6 +1,7 @@
 package app_nutri
 
 import enums.Genero
+import enums.Patologia
 import enums.PerfilPaciente
 import org.springframework.web.multipart.commons.CommonsMultipartFile
 
@@ -29,11 +30,19 @@ class PacienteController extends CRUDController{
     beforeSave(entityInstance,model){
         print params
         DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy")
+        boolean edit = params.id ? true:false
 
-        if( params.id )
+        if( edit ){
             entityInstance.perfilPaciente = getPerfilPaciente()
-        else
+
+            if( params.cadastroAnamnese )
+                entityInstance.addToAnamneses( getAnamnese() )
+
+            if( params.cadastroAvaliacaoAntropometrica )
+                entityInstance.addToAvaliacoesAntropometricas( getAvaliacaoAntropometrica() )
+        }else{
             entityInstance.perfilPaciente = PerfilPaciente.INCOMPLETO
+        }
 
         if( params.dtNascimento )
             entityInstance.dataNascimento = (Date)formatter.parse(params.dtNascimento)
@@ -72,7 +81,7 @@ class PacienteController extends CRUDController{
         println entityInstance.errors
         model.put( "paciente", entityInstance )
 
-        render(template: "perfilPaciente", model: model)
+        render(template: "perfilPaciente", model: editaModelPadrao(model, entityInstance))
     }
 
     @Override
@@ -80,7 +89,7 @@ class PacienteController extends CRUDController{
         def model = [:]
         model.put("entityInstance", entity.newInstance(params))
         model.put("template", "preCadastro" )
-        render( view: "index", model: editaModelPadrao(model) )
+        render( view: "index", model: editaModelPadrao(model,null) )
     }
 
     @Override
@@ -88,27 +97,38 @@ class PacienteController extends CRUDController{
         def entityInstance = entity.get(params.id)
         def model = [:]
 
-        List anamneses = new ArrayList<>( Anamnese.findAllByPaciente( entityInstance, [sort: "data"] ) )
-
         model.put("paciente", entityInstance)
-        model.put("anamneseAtual", anamneses != null && anamneses.size() > 0 ? anamneses.first() : null )
         model.put("template", "perfilPaciente" )
 
-        render( view: "index", model: editaModelPadrao(model) )
+        render( view: "index", model: editaModelPadrao(model, entityInstance) )
     }
 
     Anamnese getAnamnese(){
+        DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy")
         Anamnese anamnese = Anamnese.newInstance(params)
         HabitoDeVida habito = new HabitoDeVida()
         habito.isAlcoolatra = params.isAlcoolatra ? true : false
         habito.isFumante = params.isFumante ? true : false
+        anamnese.data = (Date)formatter.parse(params.dtAnamnese)
         anamnese.habitoDeVida = habito
         return anamnese
     }
 
-    def editaModelPadrao(model){
-        model.put("patologias", Anamnese.getPatologiasDisponiveis() )
-        Genero g
+    AvaliacaoAntropometrica getAvaliacaoAntropometrica(){
+        DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy")
+        AvaliacaoAntropometrica avaliacaoAntropometrica = AvaliacaoAntropometrica.newInstance(params)
+        avaliacaoAntropometrica.data = (Date)formatter.parse(params.dtAvaliacaoAntropometrica)
+        return avaliacaoAntropometrica
+    }
+
+    def editaModelPadrao(model, entityInstance){
+        List anamneses = new ArrayList<>( Anamnese.findAllByPaciente( entityInstance, [sort: "data"] ) )
+        List avaliacoesAntropometricas = new ArrayList<>( AvaliacaoAntropometrica.findAllByPaciente( entityInstance, [sort: "data"] ) )
+
+        model.put("patologias", Patologia.values() )
+        model.put("anamneseAtual", anamneses != null && anamneses.size() > 0 ? anamneses.first() : null )
+        model.put("antropometriaAtual", avaliacoesAntropometricas != null && avaliacoesAntropometricas.size() > 0 ? avaliacoesAntropometricas.first() : null )
+
         return model
     }
 

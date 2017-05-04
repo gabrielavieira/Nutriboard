@@ -2,7 +2,6 @@ package app_nutri
 
 class AvaliacaoAntropometrica {
 
-    String descricao
     Date data
     Float altura
     Float pesoAtual
@@ -12,7 +11,7 @@ class AvaliacaoAntropometrica {
     BigDecimal cintura
     BigDecimal abdomen
     BigDecimal quadril
-    BigDecimal parturrilhaEsquerda
+    BigDecimal panturrilhaEsquerda
     BigDecimal panturrilhaDireita
     BigDecimal pescoco
     BigDecimal punho
@@ -29,13 +28,15 @@ class AvaliacaoAntropometrica {
     BigDecimal diametroOsseoPunho
     BigDecimal diametroOsseoFemur
 
+    static belongsTo = [paciente: Paciente]
+
     static constraints = {
         ombro nullable: true
         peitoral nullable: true
         cintura nullable: true
         abdomen nullable: true
         quadril nullable: true
-        parturrilhaEsquerda nullable: true
+        panturrilhaEsquerda nullable: true
         panturrilhaDireita nullable: true
         pescoco nullable: true
         punho nullable: true
