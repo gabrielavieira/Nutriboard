@@ -42,4 +42,9 @@ class Paciente {
 
         return age
     }
+
+    Boolean isPerfilIncompleto(){
+        perfilPaciente.equals( PerfilPaciente.INCOMPLETO ) ? true : false
+
+    }
 }

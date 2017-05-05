@@ -33,7 +33,7 @@ class PacienteController extends CRUDController{
         boolean edit = params.id ? true:false
 
         if( edit ){
-            entityInstance.perfilPaciente = getPerfilPaciente()
+            entityInstance.perfilPaciente = getPerfilPaciente( entityInstance )
 
             if( params.cadastroAnamnese )
                 entityInstance.addToAnamneses( getAnamnese() )
@@ -168,9 +168,16 @@ class PacienteController extends CRUDController{
         return imagemPerfil
     }
 
-    def getPerfilPaciente(){
-        //TODO
-        return PerfilPaciente.INCOMPLETO
+    def getPerfilPaciente( Paciente paciente ){
+        //TODO: Temporário
+        PerfilPaciente perfil = PerfilPaciente.COMPLETO
+
+        if( paciente.anamneses == null || paciente.anamneses.isEmpty() )
+            perfil = PerfilPaciente.INCOMPLETO
+        else if( paciente.avaliacoesAntropometricas == null || paciente.avaliacoesAntropometricas.isEmpty() )
+            perfil = PerfilPaciente.INCOMPLETO
+
+        return perfil
     }
 
 }

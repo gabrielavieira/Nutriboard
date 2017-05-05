@@ -89,7 +89,7 @@
                         <li class="active"><a href="#anamnese" data-toggle="tab" aria-expanded="true">Anamnese</a></li>
                         <li class=""><a href="#avaliacaoAntropometrica" data-toggle="tab" aria-expanded="false">Avaliação Antropométrica</a></li>
                         <li class=""><a href="#planoAlimentar" data-toggle="tab" aria-expanded="false">Plano Alimentar</a></li>
-                        <li class=""><a href="#recordatorioAlimentar" data-toggle="tab" aria-expanded="false">Recordatório Alimentar</a></li>
+                        %{--<li class=""><a href="#recordatorioAlimentar" data-toggle="tab" aria-expanded="false">Recordatório Alimentar</a></li>--}%
                     </ul>
                     <div class="tab-content">
                         <!-- INÍCIO ABA ANAMNESE -->
@@ -493,14 +493,18 @@
 
                         <!-- INÍCIO ABA PLANO ALIMENTAR -->
                         <div class="tab-pane" id="planoAlimentar">
-
+                            <g:if test="${paciente?.isPerfilIncompleto()}">
+                                <div class="alert alert-warning">
+                                    <strong>Atenção!</strong> <g:message code="paciente.msgImpossivelIndicarReceita"/>
+                                </div>
+                            </g:if>
                         </div>
                         <!-- FIM ABA PLANO ALIMENTAR -->
 
                         <!-- INÍCIO ABA RECORDATORIO ALIMENTAR -->
-                        <div class="tab-pane" id="recordatorioAlimentar">
+                        %{--<div class="tab-pane" id="recordatorioAlimentar">--}%
 
-                        </div>
+                        %{--</div>--}%
                         <!-- FIM ABA RECORDATORIO ALIMENTAR -->
 
                         <!-- /.tab-pane -->
