@@ -17,11 +17,12 @@ class Paciente {
     Arquivo imagemPerfil
     PerfilPaciente perfilPaciente
 
-    static hasMany = [avaliacoesAntropometricas : AvaliacaoAntropometrica, anamneses: Anamnese]
+    static hasMany = [avaliacoesAntropometricas : AvaliacaoAntropometrica, anamneses: Anamnese, planosAlimentares: PlanoAlimentar]
 
     static constraints = {
         avaliacoesAntropometricas nullable: true
         anamneses nullable: true
+        planosAlimentares nullable: true
         imagemPerfil nullable: true
     }
 
@@ -43,8 +44,15 @@ class Paciente {
         return age
     }
 
-    Boolean isPerfilIncompleto(){
-        perfilPaciente.equals( PerfilPaciente.INCOMPLETO ) ? true : false
+    def getPerfilAtualPaciente(){
+        //TODO: Temporário
+        PerfilPaciente perfil = PerfilPaciente.COMPLETO
 
+        if( anamneses == null || anamneses.isEmpty() )
+            perfil = PerfilPaciente.INCOMPLETO
+        else if( avaliacoesAntropometricas == null || avaliacoesAntropometricas.isEmpty() )
+            perfil = PerfilPaciente.INCOMPLETO
+
+        return perfil
     }
 }

@@ -1,3 +1,4 @@
+<%@ page import="enums.PerfilPaciente; sun.misc.Perf" %>
 <g:render template="msgs"/>
 <div class="content-wrapper ajContentWrapper">
     <!-- Main content -->
@@ -13,7 +14,16 @@
                             <h3 class="profile-username text-center">${paciente?.nome}</h3>
 
                             <p class="text-muted text-center">
-                                <span class="label label-warning"><g:message code="ennumeration.perfilPaciente.${paciente?.perfilPaciente}"/></span>
+                                <g:if test="${paciente?.getPerfilAtualPaciente().equals(enums.PerfilPaciente.COMPLETO)}">
+                                    <span class="label label-success">
+                                        <g:message code="ennumeration.perfilPaciente.${paciente?.getPerfilAtualPaciente()}"/>
+                                    </span>
+                                </g:if>
+                                <g:else>
+                                    <span class="label label-warning">
+                                        <g:message code="ennumeration.perfilPaciente.${paciente?.getPerfilAtualPaciente()}"/>
+                                    </span>
+                                </g:else>
                             </p>
 
                             <ul class="list-group list-group-unbordered">
@@ -118,7 +128,7 @@
                                                 </a>
                                             </h4>
                                         </div>
-                                        <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+                                        <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
                                             <div class="panel-body">
                                                 <div class="checkbox">
                                                     <label>
@@ -225,7 +235,7 @@
                                                 </a>
                                             </h4>
                                         </div>
-                                        <div id="conteudoCircunferencias" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="circunferencia">
+                                        <div id="conteudoCircunferencias" class="panel-collapse collapse" role="tabpanel" aria-labelledby="circunferencia">
                                             <div class="panel-body">
                                                 <div class="col-md-6">
                                                     <div class="form-group col-md-12">
@@ -374,7 +384,7 @@
                                                     <div class="form-group col-md-12">
                                                         <label class="col-md-6">Punho</label>
                                                         <div class="input-group">
-                                                            <input type="text" class="form-control" name="diametroOsseoPunho">
+                                                            <input type="text" class="form-control" name="diametroOsseoPunho" value="${antropometriaAtual?.diametroOsseoPunho}">
                                                             <div class="input-group-addon">cm</div>
                                                         </div>
                                                     </div>
@@ -383,7 +393,7 @@
                                                     <div class="form-group col-md-12">
                                                         <label class="col-md-6">Fêmur</label>
                                                         <div class="input-group">
-                                                            <input type="text" class="form-control" name="diametroOsseoFemur">
+                                                            <input type="text" class="form-control" name="diametroOsseoFemur" value="${antropometriaAtual?.diametroOsseoFemur}">
                                                             <div class="input-group-addon">cm</div>
                                                         </div>
                                                     </div>
@@ -403,83 +413,60 @@
                                             <div class="panel-body">
                                                 <div class="col-md-6">
                                                     <div class="form-group col-md-12">
-                                                        <label class="col-md-6">IMC</label>
-                                                        <div class="col-md-6">
-                                                            <input type="text" class="form-control" name="IMC">
+                                                        <label class="col-md-4">Massa Gorda</label>
+                                                        <div class="input-group col-md-4">
+                                                            <input type="text" class="form-control" name="massaGorda" value="${antropometriaAtual?.massaGorda}">
+                                                            <div class="input-group-addon">Kg</div>
                                                         </div>
                                                     </div>
                                                     <div class="form-group col-md-12">
-                                                        <label class="col-md-6">Massa Gorda</label>
-                                                        <div class="col-md-6">
-                                                            <input type="text" class="form-control" name="massaGorda">
+                                                        <label class="col-md-4">Massa Magra</label>
+                                                        <div class="input-group col-md-4">
+                                                            <input type="text" class="form-control" name="massaMagra" value="${antropometriaAtual?.massaMagra}">
+                                                            <div class="input-group-addon">Kg</div>
                                                         </div>
                                                     </div>
                                                     <div class="form-group col-md-12">
-                                                        <label class="col-md-6">Massa Magra</label>
-                                                        <div class="col-md-6">
-                                                            <input type="text" class="form-control" name="massaMagra">
+                                                        <label class="col-md-4">Água Corporal</label>
+                                                        <div class="input-group col-md-4">
+                                                            <input type="text" class="form-control" name="aguaCorporal" value="${antropometriaAtual?.aguaCorporal}">
+                                                            <div class="input-group-addon">  L</div>
                                                         </div>
                                                     </div>
                                                     <div class="form-group col-md-12">
-                                                        <label class="col-md-6">Água Corporal</label>
-                                                        <div class="col-md-6">
-                                                            <input type="text" class="form-control" name="aguaCorporal">
+                                                        <label class="col-md-4">Peso Ósseo</label>
+                                                        <div class="input-group col-md-4">
+                                                            <input type="text" class="form-control" name="pesoOsseo" value="${antropometriaAtual?.pesoOsseo}">
+                                                            <div class="input-group-addon">Kg</div>
                                                         </div>
                                                     </div>
                                                     <div class="form-group col-md-12">
-                                                        <label class="col-md-6">Peso Ósseo</label>
-                                                        <div class="col-md-6">
-                                                            <input type="text" class="form-control" name="pesoOsseo">
-                                                        </div>
-                                                    </div>
-                                                    <div class="form-group col-md-12">
-                                                        <label class="col-md-6">Peso Muscular</label>
-                                                        <div class="col-md-6">
-                                                            <input type="text" class="form-control" name="pesoMuscular">
-                                                        </div>
-                                                    </div>
-                                                    <div class="form-group col-md-12">
-                                                        <label class="col-md-6">Idade Metabólica</label>
-                                                        <div class="col-md-6">
-                                                            <input type="text" class="form-control" name="idadeMetabolica">
+                                                        <label class="col-md-4">Peso Muscular</label>
+                                                        <div class="input-group col-md-4">
+                                                            <input type="text" class="form-control" name="pesoMuscular" value="${antropometriaAtual?.pesoMuscular}">
+                                                            <div class="input-group-addon">Kg</div>
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
                                                     <div class="form-group col-md-12">
-                                                        <label class="col-md-6">Peso Ideal</label>
-                                                        <div class="col-md-6">
-                                                            <input type="text" class="form-control" name="pesoIdeal">
+                                                        <label class="col-md-4">IMC</label>
+                                                        <div class="col-md-4">
+                                                            <div class="input-group">
+                                                                <input type="text" class="form-control" name="imc" value="${antropometriaAtual?.imc}">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            <span class="label label-warning" id="conclusaoIMC"></span>
                                                         </div>
                                                     </div>
                                                     <div class="form-group col-md-12">
-                                                        <label class="col-md-6">Massa Gorda</label>
-                                                        <div class="col-md-6">
-                                                            <input type="text" class="form-control" name="massaGorda">
-                                                        </div>
-                                                    </div>
-                                                    <div class="form-group col-md-12">
-                                                        <label class="col-md-6">Massa Magra</label>
-                                                        <div class="col-md-6">
-                                                            <input type="text" class="form-control" name="massaMagra">
-                                                        </div>
-                                                    </div>
-                                                    <div class="form-group col-md-12">
-                                                        <label class="col-md-6">Água Corporal</label>
-                                                        <div class="col-md-6">
-                                                            <input type="text" class="form-control" name="aguaCorporal">
-                                                        </div>
-                                                    </div>
-                                                    <div class="form-group col-md-12">
-                                                        <label class="col-md-6">Peso Residual</label>
-                                                        <div class="col-md-6">
-                                                            <input type="text" class="form-control" name="pesoResidual">
-                                                        </div>
-                                                    </div>
-                                                    <div class="form-group col-md-12">
-                                                        <label class="col-md-6">Gordura Visceral</label>
-                                                        <div class="col-md-6">
-                                                            <input type="text" class="form-control" name="gorduraVisceral">
+                                                        <label class="col-md-4">Peso Ideal</label>
+                                                        <div class="col-md-4">
+                                                            <div class="input-group">
+                                                                <input type="text" class="form-control" name="pesoIdeal" value="${antropometriaAtual?.pesoIdeal}">
+                                                                <div class="input-group-addon">Kg</div>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -493,11 +480,71 @@
 
                         <!-- INÍCIO ABA PLANO ALIMENTAR -->
                         <div class="tab-pane" id="planoAlimentar">
-                            <g:if test="${paciente?.isPerfilIncompleto()}">
+                            <g:if test="${paciente?.getPerfilAtualPaciente().equals(enums.PerfilPaciente.INCOMPLETO)}">
                                 <div class="alert alert-warning">
                                     <strong>Atenção!</strong> <g:message code="paciente.msgImpossivelIndicarReceita"/>
                                 </div>
                             </g:if>
+                            <form name="formPlanoAlimentar">
+                                <input type="hidden" name="id" value="${paciente?.id}">
+                                <input type="hidden" name="cadastroPlanoAlimentar" value="${true}">
+                                <div class="panel-group" role="tablist" aria-multiselectable="true">
+                                    <div class="form-group col-md-3 data nopad">
+                                        <div class="form-group data">
+                                            <label for="dtAnamnese">Data</label>
+                                            <input type="text" class="form-control" id="dtPlanoAlimentar" name="dtPlanoAlimentar" value="${new Date().format("dd/MM/yyyy")}">
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-3 nopad">
+                                        <div class="form-group data">
+                                            <label for="descricao">Descrição</label>
+                                            <input type="text" class="form-control" name="descricao" value="${planoAlimentarAtual?.descricao}">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="ajBtnsemlabel"></div>
+                                        <button id="btnSalvarPlanoAlimentar" type="button" class="btn btn-danger">Salvar</button>
+                                    </div>
+                                </div>
+                                <div class="panel-group" role="tablist" aria-multiselectable="true">
+                                    <g:each in="${enums.DiaSemana.values()}" var="diaSemana">
+                                        <div class="panel panel-default">
+                                            <div class="panel-heading" role="tab" id="${diaSemana}">
+                                                <h4 class="panel-title">
+                                                    <a role="button" data-toggle="collapse" data-parent="#accordion" href="#conteudo${diaSemana}" aria-expanded="true" aria-controls="conteudo${diaSemana}">
+                                                        <g:message code="ennumeration.diaSemana.${diaSemana}"/>
+                                                    </a>
+                                                    <button type="button" class="btn btn-danger abrirModalParaCadastrarRefeicao pull-right btn-xs" data-dia="${diaSemana}" data-toggle="tooltip" data-placement="top" title="Adicionar Refeição">
+                                                        <i class="fa fa-plus" aria-hidden="true"></i>
+                                                    </button>
+                                                </h4>
+                                            </div>
+                                            <div id="conteudo${diaSemana}" class="panel-collapse collapse" role="tabpanel" aria-labelledby="${diaSemana}">
+                                                <div class="panel-body">
+                                                    <div class="col-md-6">
+                                                        <div class="form-group col-md-12">
+                                                            <label class="col-md-6">Ombro</label>
+                                                            <div class="input-group">
+                                                                <input type="text" class="form-control" name="ombro" value="${antropometriaAtual?.ombro}">
+                                                                <div class="input-group-addon" >cm</div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="form-group col-md-12">
+                                                            <label class="col-md-6">Coxa Direita</label>
+                                                            <div class="input-group">
+                                                                <input type="text" class="form-control" name="coxaDireita" value="${antropometriaAtual?.coxaDireita}">
+                                                                <div class="input-group-addon">cm</div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </g:each>
+                                </div>
+                            </form>
                         </div>
                         <!-- FIM ABA PLANO ALIMENTAR -->
 
@@ -516,4 +563,23 @@
             <!-- /.col -->
         </div>
     </section>
+</div>
+
+<!-- Modal Cadastro de Atividade -->
+<div class="modal fade" id="modalCadastroReceita" tabindex="-1" role="dialog" aria-labelledby="modalCadastroReceita">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Cadastro de Refeição</h4>
+            </div>
+            <div class="modal-body">
+                <textarea class="form-control" rows="5" id="descricao" name="descricao">${atividade?.descricao}</textarea>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-primary" id="btnAdicionarRefeicao" data-dia="">Salvar</button>
+            </div>
+        </div>
+    </div>
 </div>

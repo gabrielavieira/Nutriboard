@@ -28,6 +28,14 @@ class AvaliacaoAntropometrica {
     BigDecimal diametroOsseoPunho
     BigDecimal diametroOsseoFemur
 
+    BigDecimal imc
+    BigDecimal pesoIdeal
+    BigDecimal massaGorda
+    BigDecimal massaMagra
+    BigDecimal aguaCorporal
+    BigDecimal pesoOsseo
+    BigDecimal pesoMuscular
+
     static belongsTo = [paciente: Paciente]
 
     static constraints = {
@@ -51,6 +59,13 @@ class AvaliacaoAntropometrica {
         antebraco nullable: true
         diametroOsseoPunho nullable: true
         diametroOsseoFemur nullable: true
+        imc nullable: true
+        massaGorda nullable: true
+        massaMagra nullable: true
+        aguaCorporal nullable: true
+        pesoOsseo nullable: true
+        pesoMuscular nullable: true
+        pesoIdeal nullable: true
     }
 
 }

@@ -3,8 +3,11 @@ package app_nutri
 import enums.Genero
 import enums.Patologia
 import enums.PerfilPaciente
+import enums.StatusPeso
+import grails.converters.JSON
 import org.springframework.web.multipart.commons.CommonsMultipartFile
 
+import java.math.RoundingMode
 import java.text.DateFormat
 import java.text.SimpleDateFormat
 
@@ -33,13 +36,17 @@ class PacienteController extends CRUDController{
         boolean edit = params.id ? true:false
 
         if( edit ){
-            entityInstance.perfilPaciente = getPerfilPaciente( entityInstance )
+            entityInstance.perfilPaciente = entityInstance.getPerfilAtualPaciente()
 
             if( params.cadastroAnamnese )
                 entityInstance.addToAnamneses( getAnamnese() )
 
             if( params.cadastroAvaliacaoAntropometrica )
                 entityInstance.addToAvaliacoesAntropometricas( getAvaliacaoAntropometrica() )
+
+            if( params.cadastroPlanoAlimentar )
+                entityInstance.addToPlanosAlimentares( getPlanoAlimentar() )
+
         }else{
             entityInstance.perfilPaciente = PerfilPaciente.INCOMPLETO
         }
@@ -121,13 +128,22 @@ class PacienteController extends CRUDController{
         return avaliacaoAntropometrica
     }
 
+    PlanoAlimentar getPlanoAlimentar(){
+        DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy")
+        PlanoAlimentar planoAlimentar = PlanoAlimentar.newInstance(params)
+        planoAlimentar.data = (Date)formatter.parse(params.dtPlanoAlimentar)
+        return planoAlimentar
+    }
+
     def editaModelPadrao(model, entityInstance){
         List anamneses = new ArrayList<>( Anamnese.findAllByPaciente( entityInstance, [sort: "data"] ) )
         List avaliacoesAntropometricas = new ArrayList<>( AvaliacaoAntropometrica.findAllByPaciente( entityInstance, [sort: "data"] ) )
+        List planosAlimentares = new ArrayList<>( PlanoAlimentar.findAllByPaciente( entityInstance, [sort: "data"] ) )
 
         model.put("patologias", Patologia.values() )
         model.put("anamneseAtual", anamneses != null && anamneses.size() > 0 ? anamneses.first() : null )
         model.put("antropometriaAtual", avaliacoesAntropometricas != null && avaliacoesAntropometricas.size() > 0 ? avaliacoesAntropometricas.first() : null )
+        model.put("planoAlimentarAtual", planosAlimentares != null && planosAlimentares.size() > 0 ? planosAlimentares.first() : null )
 
         return model
     }
@@ -168,16 +184,35 @@ class PacienteController extends CRUDController{
         return imagemPerfil
     }
 
-    def getPerfilPaciente( Paciente paciente ){
-        //TODO: Temporário
-        PerfilPaciente perfil = PerfilPaciente.COMPLETO
+    def getIMC(){
+        def resultado = [:]
+        BigDecimal altura = params.altura ? new BigDecimal( params.altura ) : null
+        BigDecimal peso = params.peso ? new BigDecimal( params.peso ) : null
 
-        if( paciente.anamneses == null || paciente.anamneses.isEmpty() )
-            perfil = PerfilPaciente.INCOMPLETO
-        else if( paciente.avaliacoesAntropometricas == null || paciente.avaliacoesAntropometricas.isEmpty() )
-            perfil = PerfilPaciente.INCOMPLETO
+        if( altura && peso ){
+            BigDecimal alturaEmMetros = altura/100
+            BigDecimal imc = (peso/(alturaEmMetros*alturaEmMetros)).setScale( 2, RoundingMode.HALF_EVEN )
+            resultado.put( "imc", imc )
+            resultado.put( "conclusao", getConclusaoSobrePeso(imc)  )
+        }
 
-        return perfil
+        render resultado as JSON
     }
+
+    String getConclusaoSobrePeso( BigDecimal imc ){
+        StatusPeso status
+        if( imc < new BigDecimal(18.49) ){
+            status = StatusPeso.ABAIXO
+        }else if( imc < new BigDecimal(24.99) ){
+            status = StatusPeso.NORMAL
+        }else if( imc < new BigDecimal(29.99) ){
+            status = StatusPeso.ACIMA
+        }else if( imc < new BigDecimal(34.99) ){
+            status = StatusPeso.OBESIDADE_1
+        }
+
+        return message( code: 'ennumeration.statusPeso.' + status?.name() )
+    }
+
 
 }
