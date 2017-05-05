@@ -1,5 +1,7 @@
 package app_nutri
 
+import enums.GrupoAlimentar
+
 class Alimento {
 
     String descricao

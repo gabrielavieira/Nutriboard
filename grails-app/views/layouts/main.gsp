@@ -35,8 +35,8 @@
                                 </a>
                             </li>
                             <li>
-                                <a href="${createLink(controller: 'avaliacaoAntropometrica', action: 'index')}">
-                                    <g:message code="cadastro.menu.item.avaliacaoAntropometrica.label"/>
+                                <a href="${createLink(controller: 'alimento', action: 'index')}">
+                                    <g:message code="cadastro.menu.item.alimento.label"/>
                                 </a>
                             </li>
                         </ul>

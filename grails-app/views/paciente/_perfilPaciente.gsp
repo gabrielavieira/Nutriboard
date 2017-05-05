@@ -21,7 +21,7 @@
                                     <b>Idade</b> <a class="pull-right"> ${paciente?.getIdade()} anos</a>
                                 </li>
                                 <li class="list-group-item">
-                                    <b>Altura</b> <a class="pull-right"> ${antropometriaAtual?.altura} m</a>
+                                    <b>Altura</b> <a class="pull-right"> ${antropometriaAtual?.altura} cm</a>
                                 </li>
                                 <li class="list-group-item">
                                     <b>Peso</b> <a class="pull-right"> ${antropometriaAtual?.pesoAtual} Kg</a>
@@ -201,7 +201,7 @@
                                         <label for="dtAnamnese">Altura</label>
                                         <div class="input-group">
                                             <input type="text" class="form-control" id="altura" name="altura" value="${antropometriaAtual?.altura}">
-                                            <div class="input-group-addon" >m</div>
+                                            <div class="input-group-addon" >cm</div>
                                         </div>
                                     </div>
                                     <div class="form-group col-md-3 nopad">
