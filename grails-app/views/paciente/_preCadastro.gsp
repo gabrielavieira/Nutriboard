@@ -15,16 +15,22 @@
                     <input type="text" class="form-control" id="nome" name="nome" value="${entityInstance?.nome}">
                 </div>
             </div>
-            <div class="col-md-3">
+            <div class="col-md-2">
                 <div class="form-group">
                     <label for="genero"><g:message code="paciente.genero.label"/></label>
                     <g:select name="genero" class="form-control" from="['FEMININO', 'MASCULINO']" value="${entityInstance?.genero}" />
                 </div>
             </div>
-            <div class="col-md-3">
+            <div class="col-md-2">
                 <div class="form-group data">
                     <label for="dtNascimento"><g:message code="paciente.dataNascimento.label"/></label>
                     <input type="text" class="form-control" id="dtNascimento" name="dtNascimento" value="${entityInstance?.getDataFormatada()}">
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label for="cpf"><g:message code="paciente.CPF.label"/></label>
+                    <input type="text" class="form-control" id="cpf" name="cpf" value="${entityInstance?.cpf}">
                 </div>
             </div>
         </div>
@@ -35,10 +41,10 @@
                     <input type="email" class="form-control" id="email" name="email" value="${entityInstance?.email}">
                 </div>
             </div>
-            <div class="col-md-3">
+            <div class="col-md-7">
                 <div class="form-group">
-                    <label for="cpf"><g:message code="paciente.CPF.label"/></label>
-                    <input type="text" class="form-control" id="cpf" name="cpf" value="${entityInstance?.cpf}">
+                    <label for="cpf"><g:message code="paciente.objetivo.label"/></label>
+                    <input type="text" class="form-control" id="objetivo" name="objetivo" value="${entityInstance?.objetivo}">
                 </div>
             </div>
         </div>

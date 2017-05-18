@@ -1,5 +1,6 @@
 package app_nutri
 
+import enums.DiaSemana
 import enums.Genero
 import enums.Patologia
 import enums.PerfilPaciente
@@ -214,5 +215,23 @@ class PacienteController extends CRUDController{
         return message( code: 'ennumeration.statusPeso.' + status?.name() )
     }
 
+    def adicionarRefeicao(){
+        def model = [:]
+        Paciente paciente = Paciente.get(params.idPaciente)
+        PlanoAlimentar plano = PlanoAlimentar.get(params.id)
+        Refeicao refeicao = new Refeicao( horario: params.horario, observacao: params.observacao )
+        PlanoDiario planoDiario = new PlanoDiario( dia: params.dia as DiaSemana)
+        planoDiario.addToRefeicoes( refeicao )
+        plano.addToPlanosDiarios( planoDiario )
+        if( plano.save() ){
+            flash.message = "Sucesso!"
+        }else{
+            flash.error = "Erro!"
+        }
 
+        print plano.errors
+        model.put("paciente", paciente)
+
+        render( template: "perfilPaciente", model: editaModelPadrao(model,paciente) )
+    }
 }

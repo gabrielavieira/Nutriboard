@@ -97,4 +97,17 @@ abrirModalParaCadastroRefeicao = function () {
 
 adicionarRefeicao = function () {
     var diaSemanaSelecionado = jQuery(this).attr("data-dia");
+    var idPlanoAlimentar = $('[name=formPlanoAlimentar] [name=idPlanoAlimentar]').val();
+    var idPaciente = $('[name=formPlanoAlimentar] [name=id]').val();
+    var horario = $('[name=horario]').val();
+    var observacao = $('[name=observacao]').val();
+    jQuery.ajax
+    ({
+        url: "/paciente/adicionarRefeicao",
+        type: "POST",
+        data : {id: idPlanoAlimentar, dia: diaSemanaSelecionado, horario: horario, observacao: observacao, idPaciente: idPaciente},
+        success: function ( data ) {
+            $('#conteudo').html( data );
+        }
+    });
 };

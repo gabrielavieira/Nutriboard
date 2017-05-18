@@ -16,8 +16,11 @@
             <label for="porcao"><g:message code="alimento.porcao.label"/></label>
             <div class="input-group">
                 <input type="text" class="form-control" id="porcao" name="porcao" value="${entityInstance?.porcao}">
-                <div class="input-group-addon" >g</div>
             </div>
+        </div>
+        <div class="form-group col-md-3">
+            <div class="ajBtnsemlabel"></div>
+            <g:select name="unidadeMedida" from="${enums.UnidadeMedida.values()}" class="form-control" value="${entityInstance?.unidadeMedida}"/>
         </div>
         <div class="form-group col-md-2">
             <label for="valorCalorico"><g:message code="alimento.valorCalorico.label"/></label>

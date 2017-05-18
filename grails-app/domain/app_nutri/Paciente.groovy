@@ -13,6 +13,7 @@ class Paciente {
     String cpf
     Date dataNascimento
     String email
+    String objetivo
     Boolean ativo
     Arquivo imagemPerfil
     PerfilPaciente perfilPaciente
@@ -24,6 +25,7 @@ class Paciente {
         anamneses nullable: true
         planosAlimentares nullable: true
         imagemPerfil nullable: true
+        objetivo nullable: true
     }
 
     static mapping = {

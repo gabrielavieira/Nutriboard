@@ -28,6 +28,7 @@
                 <tr>
                     <th><g:message code="alimento.descricao.label"/></th>
                     <th><g:message code="alimento.porcao.label"/></th>
+                    <th><g:message code="alimento.unidadeMedida.label"/></th>
                     <th><g:message code="alimento.valorCalorico.label"/></th>
                     <th><g:message code="alimento.grupoAlimentar.label"/></th>
                     <th><g:message code="alimento.acoes.label"/></th>
@@ -38,8 +39,9 @@
                 <tr>
                     <td>${entityInstance.descricao}</td>
                     <td>${entityInstance.porcao}</td>
+                    <td><g:message code="ennumeration.unidadeMedida.${entityInstance.unidadeMedida}"/> </td>
                     <td>${entityInstance.valorCalorico}</td>
-                    <td>${entityInstance.grupoAlimentar}</td>
+                    <td><g:message code="ennumeration.grupoAlimentar.${entityInstance.grupoAlimentar}"/></td>
                     <td>
                         <button type="button" class="btn btn-default visualizar"><i class="fa fa-pencil"></i></button>
                         <button type="button" class="btn btn-danger visualizar"><i class="fa fa-times"></i></button>

@@ -1,11 +1,13 @@
 package app_nutri
 
 import enums.GrupoAlimentar
+import enums.UnidadeMedida
 
 class Alimento {
 
     String descricao
     BigDecimal porcao
+    UnidadeMedida unidadeMedida
     BigDecimal valorCalorico
     GrupoAlimentar grupoAlimentar
 

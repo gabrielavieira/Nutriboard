@@ -9,6 +9,7 @@ class Refeicao {
     static belongsTo = [planoDiario: PlanoDiario]
 
     static constraints = {
+        alimentos nullable: true
         observacao nullable: true
     }
 }

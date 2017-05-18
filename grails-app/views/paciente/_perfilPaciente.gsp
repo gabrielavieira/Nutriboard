@@ -1,4 +1,4 @@
-<%@ page import="enums.PerfilPaciente; sun.misc.Perf" %>
+<%@ page import="enums.DiaSemana; enums.PerfilPaciente; sun.misc.Perf" %>
 <g:render template="msgs"/>
 <div class="content-wrapper ajContentWrapper">
     <!-- Main content -->
@@ -9,19 +9,19 @@
                 <div class="col-md-12 nopad">
                     <div class="box box-primary">
                         <div class="box-body box-profile">
-                            <img class="profile-user-img img-responsive img-circle" src="${resource(dir: "images/", file: "circulo.png")}" alt="User profile picture">
+                            <img class="profile-user-img img-responsive img-circle" src="${resource(dir: "images/", file: "avatar_teste.png")}" alt="User profile picture">
 
                             <h3 class="profile-username text-center">${paciente?.nome}</h3>
 
                             <p class="text-muted text-center">
                                 <g:if test="${paciente?.getPerfilAtualPaciente().equals(enums.PerfilPaciente.COMPLETO)}">
                                     <span class="label label-success">
-                                        <g:message code="ennumeration.perfilPaciente.${paciente?.getPerfilAtualPaciente()}"/>
+                                        Completo
                                     </span>
                                 </g:if>
                                 <g:else>
                                     <span class="label label-warning">
-                                        <g:message code="ennumeration.perfilPaciente.${paciente?.getPerfilAtualPaciente()}"/>
+                                        Incompleto
                                     </span>
                                 </g:else>
                             </p>
@@ -487,6 +487,7 @@
                             </g:if>
                             <form name="formPlanoAlimentar">
                                 <input type="hidden" name="id" value="${paciente?.id}">
+                                <input type="hidden" name="idPlanoAlimentar" value="${paciente?.id}">
                                 <input type="hidden" name="cadastroPlanoAlimentar" value="${true}">
                                 <div class="panel-group" role="tablist" aria-multiselectable="true">
                                     <div class="form-group col-md-3 data nopad">
@@ -496,7 +497,7 @@
                                         </div>
                                     </div>
                                     <div class="form-group col-md-3 nopad">
-                                        <div class="form-group data">
+                                        <div class="form-group">
                                             <label for="descricao">Descrição</label>
                                             <input type="text" class="form-control" name="descricao" value="${planoAlimentarAtual?.descricao}">
                                         </div>
@@ -521,23 +522,32 @@
                                             </div>
                                             <div id="conteudo${diaSemana}" class="panel-collapse collapse" role="tabpanel" aria-labelledby="${diaSemana}">
                                                 <div class="panel-body">
-                                                    <div class="col-md-6">
-                                                        <div class="form-group col-md-12">
-                                                            <label class="col-md-6">Ombro</label>
-                                                            <div class="input-group">
-                                                                <input type="text" class="form-control" name="ombro" value="${antropometriaAtual?.ombro}">
-                                                                <div class="input-group-addon" >cm</div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-6">
-                                                        <div class="form-group col-md-12">
-                                                            <label class="col-md-6">Coxa Direita</label>
-                                                            <div class="input-group">
-                                                                <input type="text" class="form-control" name="coxaDireita" value="${antropometriaAtual?.coxaDireita}">
-                                                                <div class="input-group-addon">cm</div>
-                                                            </div>
-                                                        </div>
+                                                    <div class="col-md-12">
+                                                        <table class="table">
+                                                            <thead class="thead-inverse">
+                                                            <tr>
+                                                                <th>Horário</th>
+                                                                <th>Alimentos</th>
+                                                                <th><g:message code="alimento.acoes.label"/></th>
+                                                            </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                            <g:each in="${planoAlimentarAtual?.planosDiarios}" var="planoDiario">
+                                                                <g:if test="${planoDiario?.dia.equals( diaSemana )}">
+                                                                    <g:each in="${planoDiario?.refeicoes}" var="entityInstance">
+                                                                        <tr>
+                                                                            <td>${entityInstance.horario}</td>
+                                                                            <td>${entityInstance.observacao}</td>
+                                                                            <td>
+                                                                                <button type="button" class="btn btn-default visualizar"><i class="fa fa-pencil"></i></button>
+                                                                                <button type="button" class="btn btn-danger visualizar"><i class="fa fa-times"></i></button>
+                                                                            </td>
+                                                                        </tr>
+                                                                    </g:each>
+                                                                </g:if>
+                                                            </g:each>
+                                                            </tbody>
+                                                        </table>
                                                     </div>
                                                 </div>
                                             </div>
@@ -574,7 +584,10 @@
                 <h4 class="modal-title" id="myModalLabel">Cadastro de Refeição</h4>
             </div>
             <div class="modal-body">
-                <textarea class="form-control" rows="5" id="descricao" name="descricao">${atividade?.descricao}</textarea>
+                <label for="horario">Horário</label>
+                <input type="text" class="form-control" id="horario" name="horario" value="${horario}">
+                <label for="horario">Alimentos</label>
+                <textarea class="form-control" rows="5" id="observacao" name="observacao">${observacao}</textarea>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
