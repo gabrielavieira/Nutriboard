@@ -1,4 +1,4 @@
-<%@ page import="enums.DiaSemana; enums.PerfilPaciente; sun.misc.Perf" %>
+<%@ page import="app_nutri.Alimento; enums.DiaSemana; enums.PerfilPaciente; sun.misc.Perf" %>
 <g:render template="msgs"/>
 <div class="content-wrapper ajContentWrapper">
     <!-- Main content -->
@@ -37,60 +37,55 @@
                                     <b>Peso</b> <a class="pull-right"> ${antropometriaAtual?.pesoAtual} Kg</a>
                                 </li>
                             </ul>
-
-                            <a href="#" class="btn btn-primary btn-block"><b>OK</b></a>
                         </div>
                         <!-- /.box-body -->
                     </div>
                     <!-- /.box -->
                 </div>
-                %{--<div class="col-md-12 nopad">--}%
-                    %{--<div class="box box-default">--}%
-                        %{--<div class="box-header with-border">--}%
-                            %{--<h3 class="box-title">Composição Corporal</h3>--}%
 
-                            %{--<div class="box-tools pull-right">--}%
-                                %{--<button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>--}%
-                                %{--</button>--}%
-                                %{--<button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>--}%
-                            %{--</div>--}%
-                        %{--</div>--}%
-                        %{--<!-- /.box-header -->--}%
-                        %{--<div class="box-body">--}%
-                            %{--<div class="row">--}%
-                                %{--<div class="col-md-8">--}%
-                                    %{--<div class="chart-responsive">--}%
-                                        %{--<canvas id="pieChart" height="180" width="205" style="width: 205px; height: 180px;"></canvas>--}%
-                                    %{--</div>--}%
-                                    %{--<!-- ./chart-responsive -->--}%
-                                %{--</div>--}%
-                                %{--<!-- /.col -->--}%
-                                %{--<div class="col-md-4">--}%
-                                    %{--<ul class="chart-legend clearfix">--}%
-                                        %{--<li><i class="fa fa-circle-o text-red"></i> Peso Gordo</li>--}%
-                                        %{--<li><i class="fa fa-circle-o text-green"></i> Peso Residual</li>--}%
-                                        %{--<li><i class="fa fa-circle-o text-yellow"></i> Peso Magro</li>--}%
-                                        %{--<li><i class="fa fa-circle-o text-aqua"></i> Peso Ósseo</li>--}%
-                                    %{--</ul>--}%
-                                %{--</div>--}%
-                                %{--<!-- /.col -->--}%
-                            %{--</div>--}%
-                            %{--<!-- /.row -->--}%
-                        %{--</div>--}%
-                        %{--<!-- /.box-body -->--}%
-                        %{--<div class="box-footer no-padding">--}%
-                            %{--<ul class="nav nav-pills nav-stacked">--}%
-                                %{--<li><a href="#">United States of America--}%
-                                    %{--<span class="pull-right text-red"><i class="fa fa-angle-down"></i> 12%</span></a></li>--}%
-                                %{--<li><a href="#">India <span class="pull-right text-green"><i class="fa fa-angle-up"></i> 4%</span></a>--}%
-                                %{--</li>--}%
-                                %{--<li><a href="#">China--}%
-                                    %{--<span class="pull-right text-yellow"><i class="fa fa-angle-left"></i> 0%</span></a></li>--}%
-                            %{--</ul>--}%
-                        %{--</div>--}%
-                        %{--<!-- /.footer -->--}%
-                    %{--</div>--}%
-                %{--</div>--}%
+                <div class="col-md-12 nopad">
+                    <div class="box box-default">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">Composição Corporal</h3>
+
+                            <div class="box-tools pull-right">
+                                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                                </button>
+                                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                            </div>
+                        </div>
+
+                        <!-- /.box-header -->
+                        <div class="box-body">
+                            <div class="row">
+                                <g:if test="${paciente?.getPerfilAtualPaciente().equals(enums.PerfilPaciente.INCOMPLETO)}">
+                                    <div class="col-md-12">
+                                        <strong>Atenção!</strong> <g:message code="paciente.msgComposicaoNaoCalculada"/>
+                                    </div>
+                                </g:if>
+                                <g:else>
+                                    <div class="col-md-8">
+                                        <div class="chart-responsive">
+                                            <canvas id="graficoComposicaoCorporal"></canvas>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <ul class="chart-legend clearfix">
+                                            <li><i class="fa fa-circle-o text-red"></i> Gordura</li>
+                                            <li><i class="fa fa-circle-o text-green"></i> Residual</li>
+                                            <li><i class="fa fa-circle-o text-aqua"></i> Magro</li>
+                                            <li><i class="fa fa-circle-o text-yellow"></i> Osseo</li>
+                                        </ul>
+                                    </div>
+                                </g:else>
+                            </div>
+                            <!-- /.row -->
+                        </div>
+                        <!-- /.box-body -->
+                        <div class="box-footer no-padding"></div>
+                        <!-- /.footer -->
+                    </div>
+                </div>
             </div>
             <!-- /.col -->
             <div class="col-md-9">
@@ -99,7 +94,6 @@
                         <li class="active"><a href="#anamnese" data-toggle="tab" aria-expanded="true">Anamnese</a></li>
                         <li class=""><a href="#avaliacaoAntropometrica" data-toggle="tab" aria-expanded="false">Avaliação Antropométrica</a></li>
                         <li class=""><a href="#planoAlimentar" data-toggle="tab" aria-expanded="false">Plano Alimentar</a></li>
-                        %{--<li class=""><a href="#recordatorioAlimentar" data-toggle="tab" aria-expanded="false">Recordatório Alimentar</a></li>--}%
                     </ul>
                     <div class="tab-content">
                         <!-- INÍCIO ABA ANAMNESE -->
@@ -523,7 +517,7 @@
                                             <div id="conteudo${diaSemana}" class="panel-collapse collapse" role="tabpanel" aria-labelledby="${diaSemana}">
                                                 <div class="panel-body">
                                                     <div class="col-md-12">
-                                                        <table class="table">
+                                                        <table class="table" id="table${diaSemana}">
                                                             <thead class="thead-inverse">
                                                             <tr>
                                                                 <th>Horário</th>
@@ -584,10 +578,33 @@
                 <h4 class="modal-title" id="myModalLabel">Cadastro de Refeição</h4>
             </div>
             <div class="modal-body">
-                <label for="horario">Horário</label>
-                <input type="text" class="form-control" id="horario" name="horario" value="${horario}">
-                <label for="horario">Alimentos</label>
-                <textarea class="form-control" rows="5" id="observacao" name="observacao">${observacao}</textarea>
+                <form id="formRefeicao">
+                    <div class="col-md-3">
+                        <label for="horario">Horário</label>
+                        <input type="text" class="form-control" id="horario" name="horario" value="${horario}">
+                    </div>
+                    <div class="col-md-10">
+                        <label for="horario">Alimento</label>
+                        <g:select name="alimento" from="${app_nutri.Alimento.list()}" class="form-control" value="${alimento}" optionKey="id" optionValue="descricao"/>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="ajBtnsemlabel"></div>
+                        <button id="adicionarAlimento" type="button" class="btn btn-danger"><i class="fa fa-plus"></i></button>
+                    </div>
+
+                    <table class="table" id="tabelaDeAlimentos">
+                        <thead class="thead-inverse">
+                        <tr>
+                            <th>Alimento</th>
+                            <th>Calorias</th>
+                            <th><g:message code="alimento.acoes.label"/></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+
+                        </tbody>
+                    </table>
+                </form>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>

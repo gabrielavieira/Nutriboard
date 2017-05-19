@@ -7,8 +7,6 @@ class PlanoAlimentar {
 
     static hasMany = [planosDiarios: PlanoDiario]
 
-    static belongsTo = [paciente: Paciente]
-
     static constraints = {
         planosDiarios nullable: true
     }

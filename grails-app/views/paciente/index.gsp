@@ -5,6 +5,7 @@
         <title><g:message code="paciente.label"/></title>
         <asset:stylesheet src="bootstrap-datepicker3.css"/>
         <asset:javascript src="paciente/paciente.js"/>
+        <asset:javascript src="plugins/Chart.js"/>
         <asset:stylesheet src="plugins/fileinput.css"/>
     </head>
     <body class="hold-transition skin-blue sidebar-mini">

@@ -5,6 +5,8 @@ var salvarPlanoAlimentar;
 var atualizarIMC;
 var abrirModalParaCadastroRefeicao;
 var adicionarRefeicao;
+var adicionarAlimento;
+var removerAlimento;
 
 window.onload = function()
 {
@@ -15,15 +17,59 @@ window.onload = function()
     jQuery(document).delegate( "#altura,#pesoAtual", "change", atualizarIMC );
     jQuery(document).delegate( ".abrirModalParaCadastrarRefeicao", "click", abrirModalParaCadastroRefeicao );
     jQuery(document).delegate( "#btnAdicionarRefeicao", "click", adicionarRefeicao );
+    jQuery(document).delegate( "#adicionarAlimento", "click", adicionarAlimento );
+    jQuery(document).delegate( ".removerAlimento", "click", removerAlimento );
 
     carregaDatepicker();
+    carregarGraficos();
     $("#inputUploadArquivo").fileinput();
 
     jQuery( document ).ajaxStop( function()
     {
         carregaDatepicker();
+        carregarGraficos();
         $("#inputUploadArquivo").fileinput();
     });
+};
+
+function carregarGraficos() {
+    var ctx = $("#graficoComposicaoCorporal");
+
+    var conteudoComposicao = {
+        labels: [
+            "Gordo",
+            "Residual",
+            "Magro",
+            "Osseo"
+        ],
+        datasets: [
+            {
+                data: [10.88, 11.44, 24.87, 7.98],
+                backgroundColor: [
+                    "#d73925",
+                    "#00a65a",
+                    "#00c0ef",
+                    "#ffce56"
+                ],
+                hoverBackgroundColor: [
+                    "#d73925",
+                    "#00a65a",
+                    "#00c0ef",
+                    "#ffce56"
+                ]
+            }]
+    };
+
+    var composicaoCorporalChart = new Chart(ctx, {
+        type: 'doughnut',
+        data: conteudoComposicao,
+        options: {
+            legend:{
+                display : false
+            }
+        }
+    });
+
 };
 
 salvarPreCadastro = function () {
@@ -97,17 +143,47 @@ abrirModalParaCadastroRefeicao = function () {
 
 adicionarRefeicao = function () {
     var diaSemanaSelecionado = jQuery(this).attr("data-dia");
-    var idPlanoAlimentar = $('[name=formPlanoAlimentar] [name=idPlanoAlimentar]').val();
-    var idPaciente = $('[name=formPlanoAlimentar] [name=id]').val();
-    var horario = $('[name=horario]').val();
-    var observacao = $('[name=observacao]').val();
+    // jQuery.ajax
+    // ({
+    //     url: "/paciente/criarRefeicao",
+    //     type: "POST",
+    //     data : $( '#formRefeicao' ).find( 'input,select,textarea' ).serialize(),
+    //     success: function ( data ) {
+    //         jQuery('#table'+diaSemanaSelecionado + 'tbody')
+    //     }
+    // });
+    var data = {id: '1', horario: '06:00', alimentos: [ {} ]};
+    jQuery('#table'+diaSemanaSelecionado + ' tbody')
+        .append('<tr id="refeicao' + data.id + '">'+
+                    '<input type="hidden" name="refeicao" value="'+ data.id +'"/>'+
+                    '<td>' + data.horario +'</td>'+
+                    '<td>' + data.alimentos +'</td>'+
+                    '<td><button type="button" class="btn btn-danger btn-xs removerRefeicao" data-id="' + data.id + '"><i class="fa fa-times"></i></button></td>'+
+                '</tr>');
+};
+
+adicionarAlimento = function () {
+    var idAlimento = $('[name=alimento]').val();
     jQuery.ajax
     ({
-        url: "/paciente/adicionarRefeicao",
+        url: "/alimento/getAlimento",
         type: "POST",
-        data : {id: idPlanoAlimentar, dia: diaSemanaSelecionado, horario: horario, observacao: observacao, idPaciente: idPaciente},
+        data : {idAlimento: idAlimento},
         success: function ( data ) {
-            $('#conteudo').html( data );
+            $('#tabelaDeAlimentos tbody')
+                .append('<tr id="alimento' + data.id + '">'+
+                            '<input type="hidden" name="alimentos" value="'+ data.id +'"/>'+
+                            '<td>' + data.descricao +'</td>'+
+                            '<td>' + data.valorCalorico + '</td>'+
+                            '<td><button type="button" class="btn btn-danger btn-xs removerAlimento" data-id="' + data.id + '"><i class="fa fa-times"></i></button></td>'+
+                        '</tr>');
         }
     });
+};
+
+removerAlimento = function () {
+    console.log("here");
+    var idAlimento = $(this).attr('data-id');
+    console.log(idAlimento);
+    jQuery('#alimento'+idAlimento).remove();
 };

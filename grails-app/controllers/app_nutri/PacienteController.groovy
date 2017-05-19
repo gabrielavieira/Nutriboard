@@ -45,8 +45,8 @@ class PacienteController extends CRUDController{
             if( params.cadastroAvaliacaoAntropometrica )
                 entityInstance.addToAvaliacoesAntropometricas( getAvaliacaoAntropometrica() )
 
-            if( params.cadastroPlanoAlimentar )
-                entityInstance.addToPlanosAlimentares( getPlanoAlimentar() )
+//            if( params.cadastroPlanoAlimentar )
+//                entityInstance.addToPlanosAlimentares( getPlanoAlimentar() )
 
         }else{
             entityInstance.perfilPaciente = PerfilPaciente.INCOMPLETO
@@ -129,17 +129,10 @@ class PacienteController extends CRUDController{
         return avaliacaoAntropometrica
     }
 
-    PlanoAlimentar getPlanoAlimentar(){
-        DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy")
-        PlanoAlimentar planoAlimentar = PlanoAlimentar.newInstance(params)
-        planoAlimentar.data = (Date)formatter.parse(params.dtPlanoAlimentar)
-        return planoAlimentar
-    }
-
     def editaModelPadrao(model, entityInstance){
         List anamneses = new ArrayList<>( Anamnese.findAllByPaciente( entityInstance, [sort: "data"] ) )
         List avaliacoesAntropometricas = new ArrayList<>( AvaliacaoAntropometrica.findAllByPaciente( entityInstance, [sort: "data"] ) )
-        List planosAlimentares = new ArrayList<>( PlanoAlimentar.findAllByPaciente( entityInstance, [sort: "data"] ) )
+        List planosAlimentares = new ArrayList<>( entityInstance?.planosAlimentares )
 
         model.put("patologias", Patologia.values() )
         model.put("anamneseAtual", anamneses != null && anamneses.size() > 0 ? anamneses.first() : null )
@@ -233,5 +226,19 @@ class PacienteController extends CRUDController{
         model.put("paciente", paciente)
 
         render( template: "perfilPaciente", model: editaModelPadrao(model,paciente) )
+    }
+
+    PlanoAlimentar getPlanoAlimentar(){
+        PlanoAlimentar planoAlimentar = new PlanoAlimentar( data: new Date())
+        PlanoDiario planoDiario = new PlanoDiario( dia: DiaSemana.SEGUNDA )
+        return planoAlimentar
+    }
+
+    def criarRefeicao(){
+        print params
+        Refeicao refeicao = Refeicao.newInstance( params )
+        refeicao.save(flush: true)
+        print refeicao.errors
+        render refeicao as JSON
     }
 }
