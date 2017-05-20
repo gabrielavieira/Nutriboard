@@ -1,3 +1,4 @@
+<g:render template="msgs"/>
 <div  class="container">
     <div class="col-md-12">
         <h3>

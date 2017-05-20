@@ -45,8 +45,8 @@ class PacienteController extends CRUDController{
             if( params.cadastroAvaliacaoAntropometrica )
                 entityInstance.addToAvaliacoesAntropometricas( getAvaliacaoAntropometrica() )
 
-//            if( params.cadastroPlanoAlimentar )
-//                entityInstance.addToPlanosAlimentares( getPlanoAlimentar() )
+            if( params.cadastroPlanoAlimentar )
+                entityInstance.addToPlanosAlimentares( getPlanoAlimentar() )
 
         }else{
             entityInstance.perfilPaciente = PerfilPaciente.INCOMPLETO
@@ -229,8 +229,17 @@ class PacienteController extends CRUDController{
     }
 
     PlanoAlimentar getPlanoAlimentar(){
-        PlanoAlimentar planoAlimentar = new PlanoAlimentar( data: new Date())
-        PlanoDiario planoDiario = new PlanoDiario( dia: DiaSemana.SEGUNDA )
+        PlanoAlimentar planoAlimentar = new PlanoAlimentar( data: new Date(), descricao: params.descricao)
+
+        DiaSemana.values().each { dia ->
+            PlanoDiario planoDiario = new PlanoDiario( dia: dia )
+            def listaDeRefeicoes = params.get('refeicoes['+ dia +']')?.split(",")
+            listaDeRefeicoes?.each{ idRefeicao -> planoDiario.addToRefeicoes( Refeicao.get( idRefeicao ) ) }
+
+            if( listaDeRefeicoes != null && listaDeRefeicoes.size() > 0 )
+                planoAlimentar.addToPlanosDiarios( planoDiario )
+        }
+
         return planoAlimentar
     }
 

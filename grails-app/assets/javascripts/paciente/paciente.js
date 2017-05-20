@@ -149,17 +149,17 @@ adicionarRefeicao = function () {
     //     type: "POST",
     //     data : $( '#formRefeicao' ).find( 'input,select,textarea' ).serialize(),
     //     success: function ( data ) {
-    //         jQuery('#table'+diaSemanaSelecionado + 'tbody')
+            var data = {id: '1'};
+            jQuery('#table'+diaSemanaSelecionado + ' tbody')
+                .append('<tr id="refeicao' + data.id + '">'+
+                    '<input type="hidden" name="refeicoes['+ diaSemanaSelecionado +']" value="'+ data.id +'"/>'+
+                    '<td>' + data.horario +'</td>'+
+                    '<td>' + getDescricaoAlimentos(data.alimentos) +'</td>'+
+                    '<td><button type="button" class="btn btn-danger btn-xs removerRefeicao" data-id="' + data.id + '"><i class="fa fa-times"></i></button></td>'+
+                    '</tr>');
+            cleanAndHideModal();
     //     }
     // });
-    var data = {id: '1', horario: '06:00', alimentos: [ {} ]};
-    jQuery('#table'+diaSemanaSelecionado + ' tbody')
-        .append('<tr id="refeicao' + data.id + '">'+
-                    '<input type="hidden" name="refeicao" value="'+ data.id +'"/>'+
-                    '<td>' + data.horario +'</td>'+
-                    '<td>' + data.alimentos +'</td>'+
-                    '<td><button type="button" class="btn btn-danger btn-xs removerRefeicao" data-id="' + data.id + '"><i class="fa fa-times"></i></button></td>'+
-                '</tr>');
 };
 
 adicionarAlimento = function () {
@@ -187,3 +187,19 @@ removerAlimento = function () {
     console.log(idAlimento);
     jQuery('#alimento'+idAlimento).remove();
 };
+
+function getDescricaoAlimentos( alimentos ){
+    var descricao = "";
+
+    $.each( alimentos, function( index, value ){
+        descricao += value.descricao + " Porção: " + value.porcao + " " + value.unidadeMedida
+    });
+
+    return descricao
+};
+
+function cleanAndHideModal() {
+    jQuery('#horario').val('');
+    jQuery('#tabelaDeAlimentos tbody').empty();
+    jQuery('#modalCadastroReceita').modal('hide');
+}
