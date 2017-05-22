@@ -1,14 +1,12 @@
 package app_nutri
 
 import enums.DiaSemana
-import enums.Genero
 import enums.Patologia
 import enums.PerfilPaciente
 import enums.StatusPeso
 import grails.converters.JSON
 import org.springframework.web.multipart.MultipartFile
 import org.springframework.web.multipart.MultipartHttpServletRequest
-import org.springframework.web.multipart.commons.CommonsMultipartFile
 
 import java.math.RoundingMode
 import java.text.DateFormat
@@ -128,6 +126,7 @@ class PacienteController extends CRUDController{
         DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy")
         AvaliacaoAntropometrica avaliacaoAntropometrica = AvaliacaoAntropometrica.newInstance(params)
         avaliacaoAntropometrica.data = (Date)formatter.parse(params.dtAvaliacaoAntropometrica)
+        avaliacaoAntropometrica.statusPeso = getConclusaoSobrePeso( avaliacaoAntropometrica.imc )
         return avaliacaoAntropometrica
     }
 
@@ -135,10 +134,17 @@ class PacienteController extends CRUDController{
         List anamneses = new ArrayList<>( Anamnese.findAllByPaciente( entityInstance, [sort: "data"] ) )
         List avaliacoesAntropometricas = new ArrayList<>( AvaliacaoAntropometrica.findAllByPaciente( entityInstance, [sort: "data"] ) )
         List planosAlimentares =  new ArrayList<>( PlanoAlimentar.findAllByPaciente( entityInstance, [sort: "data"] ) )
+        Anamnese anamneseAtual = anamneses != null && anamneses.size() > 0 ? anamneses.first() : null
+        AvaliacaoAntropometrica avaliacaoAntropometrica = avaliacoesAntropometricas != null && avaliacoesAntropometricas.size() > 0 ? avaliacoesAntropometricas.first() : null
+
+        if( anamneseAtual != null && avaliacaoAntropometrica != null )
+            model.put("habilitarSugestao", true )
+        else
+            model.put("habilitarSugestao", false )
 
         model.put("patologias", Patologia.values() )
-        model.put("anamneseAtual", anamneses != null && anamneses.size() > 0 ? anamneses.first() : null )
-        model.put("antropometriaAtual", avaliacoesAntropometricas != null && avaliacoesAntropometricas.size() > 0 ? avaliacoesAntropometricas.first() : null )
+        model.put("anamneseAtual", anamneseAtual )
+        model.put("antropometriaAtual", avaliacaoAntropometrica )
         model.put("planoAlimentarAtual", planosAlimentares != null && planosAlimentares.size() > 0 ? planosAlimentares.first() : null )
 
         return model
@@ -154,7 +160,8 @@ class PacienteController extends CRUDController{
             BigDecimal imc = (peso/(alturaEmMetros*alturaEmMetros)).setScale( 2, RoundingMode.HALF_EVEN )
             StatusPeso statusPeso = getConclusaoSobrePeso(imc)
             resultado.put( "imc", imc )
-            resultado.put( "conclusao", message( code: 'ennumeration.statusPeso.' + statusPeso )  )
+            resultado.put( "conclusao", statusPeso )
+            resultado.put( "descricao", message( code: 'ennumeration.statusPeso.' + statusPeso )  )
             resultado.put( "corSpan", getCorSpan( statusPeso )  )
         }
 
@@ -296,10 +303,14 @@ class PacienteController extends CRUDController{
         }
     }
 
-    PlanoAlimentar getPlanoAlimentarDoPerfilSemelhante( Paciente pacienteAtual ){
+    def atualizaPlanoAlimentarPorPerfilSemelhante(){
+        Paciente pacienteAtual = Paciente.read( params.idPaciente )
         Anamnese anamneseAtual = getUltimaAnamnese(pacienteAtual)
         AvaliacaoAntropometrica avaliacaoAntropometrica = getUltimaAvaliacaoAntropometrica(pacienteAtual)
         Paciente pacienteSimiliar
+        def model = [:]
+        editaModelPadrao(model, pacienteAtual)
+
         if( anamneseAtual ){
             if(anamneseAtual.patologias != null && anamneseAtual.patologias.size() > 0){
                 //TODO: Filtrar
@@ -317,6 +328,9 @@ class PacienteController extends CRUDController{
         PlanoAlimentar planoPacienteSimiliar = getUltimoPlanoAlimentar( pacienteSimiliar )
         PlanoAlimentar planoSugerido = planoPacienteSimiliar.clonar( planoPacienteSimiliar )
 
-        return planoSugerido
+        model.put( 'planoAlimentarAtual', planoSugerido )
+        model.put( 'paciente', pacienteAtual )
+
+        render( template: "perfilPaciente", model: model )
     }
 }

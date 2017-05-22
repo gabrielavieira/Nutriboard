@@ -453,13 +453,19 @@
                                                         </div>
                                                         <div class="col-md-4" id="divStatusPeso">
                                                             <g:if test="${antropometriaAtual?.statusPeso.equals( enums.StatusPeso.NORMAL )}">
-                                                                <span class="label label-success" id="conclusaoIMC">${antropometriaAtual?.statusPeso}</span>
+                                                                <span class="label label-success" id="conclusaoIMC">
+                                                                    <g:message code="ennumeration.statusPeso.${antropometriaAtual?.statusPeso}"/>
+                                                                </span>
                                                             </g:if>
                                                             <g:if test="${antropometriaAtual?.statusPeso.equals( enums.StatusPeso.ABAIXO ) || antropometriaAtual?.statusPeso.equals( enums.StatusPeso.ACIMA )}">
-                                                                <span class="label label-warning" id="conclusaoIMC">${antropometriaAtual?.statusPeso}</span>
+                                                                <span class="label label-warning" id="conclusaoIMC">
+                                                                    <g:message code="ennumeration.statusPeso.${antropometriaAtual?.statusPeso}"/>
+                                                                </span>
                                                             </g:if>
                                                             <g:if test="${antropometriaAtual?.statusPeso.equals( enums.StatusPeso.MUITO_ABAIXO ) || antropometriaAtual?.statusPeso.equals( enums.StatusPeso.OBESIDADE_1 )}">
-                                                                <span class="label label-danger" id="conclusaoIMC">${antropometriaAtual?.statusPeso}</span>
+                                                                <span class="label label-danger" id="conclusaoIMC">
+                                                                    <g:message code="ennumeration.statusPeso.${antropometriaAtual?.statusPeso}"/>
+                                                                </span>
                                                             </g:if>
                                                             <input type="hidden" value="${antropometriaAtual?.statusPeso}" name="statusPeso">
                                                         </div>
@@ -506,9 +512,14 @@
                                             <input type="text" class="form-control" name="descricao" value="${planoAlimentarAtual?.descricao}">
                                         </div>
                                     </div>
-                                    <div class="form-group">
+                                    <div class="form-group col-md-3">
                                         <div class="ajBtnsemlabel"></div>
                                         <button id="btnSalvarPlanoAlimentar" type="button" class="btn btn-danger">Salvar</button>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <div class="ajBtnsemlabel"></div>
+                                        <button id="btnAtualizarSugestaoPlano" type="button" class="btn btn-info" data-id="${paciente?.id}" ${habilitarSugestao == false || habilitarSugestao == "false" ? 'disabled="disabled"' : '' } >Sugestão</button>
                                     </div>
                                 </div>
                                 <div class="panel-group" role="tablist" aria-multiselectable="true">

@@ -9,6 +9,7 @@ var adicionarAlimento;
 var removerAlimento;
 var removerRefeicao;
 var removerPaciente;
+var getSugestaoPlano;
 
 window.onload = function()
 {
@@ -23,6 +24,7 @@ window.onload = function()
     jQuery(document).delegate( ".removerAlimento", "click", removerAlimento );
     jQuery(document).delegate( ".removerRefeicao", "click", removerRefeicao );
     jQuery(document).delegate( "#removerPaciente", "click", removerPaciente );
+    jQuery(document).delegate( "#btnAtualizarSugestaoPlano", "click", getSugestaoPlano );
 
     carregaDatepicker();
     carregarGraficos();
@@ -133,7 +135,7 @@ atualizarIMC = function () {
         type: "POST",
         data : {altura: altura, peso: peso},
         success: function ( data ) {
-            var span = '<span class="label label-'+ data.corSpan +'" id="conclusaoIMC">'+ data.conclusao +'</span>'
+            var span = '<span class="label label-'+ data.corSpan +'" id="conclusaoIMC">'+ data.descricao +'</span>'
             jQuery('[name=imc]').val(data.imc);
             jQuery('#divStatusPeso').append(span);
         }
@@ -271,3 +273,16 @@ salvarPreCadastro = function() {
             }
         });
 };
+
+getSugestaoPlano = function () {
+    var idPaciente = $(this).attr('data-id');
+    jQuery.ajax
+    ({
+        url: "/paciente/atualizaPlanoAlimentarPorPerfilSemelhante",
+        type: "POST",
+        data : {idPaciente: idPaciente},
+        success: function ( data ) {
+            $('#conteudo').html( data );
+        }
+    });
+}
