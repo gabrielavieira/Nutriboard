@@ -7,7 +7,8 @@
     </div>
 </div>
 <div class="container">
-    <form id="formNovo">
+    %{--<form id="formNovo">--}%
+    <g:form name="formNovo" url="[action:'save',controller:'paciente']">
         <div class="col-md-12 nopad">
             <div class="col-md-5">
                 <div class="form-group">
@@ -58,5 +59,6 @@
             <div class="ajBtnsemlabel"></div>
             <button id="btnSalvarPreCadastro" type="button" class="btn btn-danger">Salvar</button>
         </div>
-    </form>
+    </g:form>
+    %{--</form>--}%
 </div>

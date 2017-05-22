@@ -7,6 +7,8 @@ var abrirModalParaCadastroRefeicao;
 var adicionarRefeicao;
 var adicionarAlimento;
 var removerAlimento;
+var removerRefeicao;
+var removerPaciente;
 
 window.onload = function()
 {
@@ -19,6 +21,8 @@ window.onload = function()
     jQuery(document).delegate( "#btnAdicionarRefeicao", "click", adicionarRefeicao );
     jQuery(document).delegate( "#adicionarAlimento", "click", adicionarAlimento );
     jQuery(document).delegate( ".removerAlimento", "click", removerAlimento );
+    jQuery(document).delegate( ".removerRefeicao", "click", removerRefeicao );
+    jQuery(document).delegate( "#removerPaciente", "click", removerPaciente );
 
     carregaDatepicker();
     carregarGraficos();
@@ -143,13 +147,12 @@ abrirModalParaCadastroRefeicao = function () {
 
 adicionarRefeicao = function () {
     var diaSemanaSelecionado = jQuery(this).attr("data-dia");
-    // jQuery.ajax
-    // ({
-    //     url: "/paciente/criarRefeicao",
-    //     type: "POST",
-    //     data : $( '#formRefeicao' ).find( 'input,select,textarea' ).serialize(),
-    //     success: function ( data ) {
-            var data = {id: '1'};
+    jQuery.ajax
+    ({
+        url: "/paciente/criarRefeicao",
+        type: "POST",
+        data : $( '#formRefeicao' ).find( 'input,select,textarea' ).serialize(),
+        success: function ( data ) {
             jQuery('#table'+diaSemanaSelecionado + ' tbody')
                 .append('<tr id="refeicao' + data.id + '">'+
                     '<input type="hidden" name="refeicoes['+ diaSemanaSelecionado +']" value="'+ data.id +'"/>'+
@@ -158,8 +161,8 @@ adicionarRefeicao = function () {
                     '<td><button type="button" class="btn btn-danger btn-xs removerRefeicao" data-id="' + data.id + '"><i class="fa fa-times"></i></button></td>'+
                     '</tr>');
             cleanAndHideModal();
-    //     }
-    // });
+        }
+    });
 };
 
 adicionarAlimento = function () {
@@ -188,11 +191,29 @@ removerAlimento = function () {
     jQuery('#alimento'+idAlimento).remove();
 };
 
+removerRefeicao = function () {
+    var idRefeicao = jQuery(this).attr('data-id');
+    jQuery('#refeicao'+idRefeicao).remove();
+};
+
+removerPaciente = function () {
+    var idPaciente = $(this).attr('data-id');
+    jQuery.ajax
+    ({
+        url: "/paciente/deletarPaciente",
+        type: "POST",
+        data : {id: idPaciente},
+        success: function ( data ) {
+            $('#conteudo').html( data );
+        }
+    });
+};
+
 function getDescricaoAlimentos( alimentos ){
     var descricao = "";
 
     $.each( alimentos, function( index, value ){
-        descricao += value.descricao + " Porção: " + value.porcao + " " + value.unidadeMedida
+        descricao += value.descricao + " Porção: " + value.porcao + " " + value.unidadeMedida.name + "; "
     });
 
     return descricao

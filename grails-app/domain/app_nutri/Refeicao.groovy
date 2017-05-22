@@ -14,7 +14,7 @@ class Refeicao {
     String getDescricao(){
         String descricao = ""
         alimentos.each{ alimento ->
-            descricao += alimento.descricao + " Porção: " + alimento.porcao + " " + alimento.unidadeMedida
+            descricao += alimento.descricao + " Porção: " + alimento.porcao + " " + alimento.unidadeMedida + "; "
         }
         return descricao
     }

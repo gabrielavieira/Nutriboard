@@ -6,6 +6,8 @@ import enums.Patologia
 import enums.PerfilPaciente
 import enums.StatusPeso
 import grails.converters.JSON
+import org.springframework.web.multipart.MultipartFile
+import org.springframework.web.multipart.MultipartHttpServletRequest
 import org.springframework.web.multipart.commons.CommonsMultipartFile
 
 import java.math.RoundingMode
@@ -132,7 +134,7 @@ class PacienteController extends CRUDController{
     def editaModelPadrao(model, entityInstance){
         List anamneses = new ArrayList<>( Anamnese.findAllByPaciente( entityInstance, [sort: "data"] ) )
         List avaliacoesAntropometricas = new ArrayList<>( AvaliacaoAntropometrica.findAllByPaciente( entityInstance, [sort: "data"] ) )
-        List planosAlimentares = new ArrayList<>( entityInstance?.planosAlimentares )
+        List planosAlimentares =  new ArrayList<>( PlanoAlimentar.findAllByPaciente( entityInstance, [sort: "data"] ) )
 
         model.put("patologias", Patologia.values() )
         model.put("anamneseAtual", anamneses != null && anamneses.size() > 0 ? anamneses.first() : null )
@@ -157,26 +159,26 @@ class PacienteController extends CRUDController{
         }
     }
 
-    def getImagemPerfil(){
-        Arquivo fileUploaded = getArquivoPorParametro()
-        Paciente paciente = Paciente.get(params.id)
-        Arquivo imagemPerfil = paciente?.imagemPerfil
-        if(fileUploaded) {
-            if(imagemPerfil){
-                imagemPerfil?.arquivo = fileUploaded?.arquivo
-                imagemPerfil?.tipoArquivo = fileUploaded?.tipoArquivo
-                imagemPerfil?.tamanho = fileUploaded?.tamanho
-                imagemPerfil?.nomeArquivo = fileUploaded?.nomeArquivo
-            }else{
-                imagemPerfil = new Arquivo()
-                imagemPerfil?.arquivo = fileUploaded?.arquivo
-                imagemPerfil?.tipoArquivo = fileUploaded?.tipoArquivo
-                imagemPerfil?.tamanho = fileUploaded?.tamanho
-                imagemPerfil?.nomeArquivo = fileUploaded?.nomeArquivo
-            }
-        }
-        return imagemPerfil
-    }
+//    def getImagemPerfil(){
+//        Arquivo fileUploaded = getArquivoPorParametro()
+//        Paciente paciente = Paciente.get(params.id)
+//        Arquivo imagemPerfil = paciente?.imagemPerfil
+//        if(fileUploaded) {
+//            if(imagemPerfil){
+//                imagemPerfil?.arquivo = fileUploaded?.arquivo
+//                imagemPerfil?.tipoArquivo = fileUploaded?.tipoArquivo
+//                imagemPerfil?.tamanho = fileUploaded?.tamanho
+//                imagemPerfil?.nomeArquivo = fileUploaded?.nomeArquivo
+//            }else{
+//                imagemPerfil = new Arquivo()
+//                imagemPerfil?.arquivo = fileUploaded?.arquivo
+//                imagemPerfil?.tipoArquivo = fileUploaded?.tipoArquivo
+//                imagemPerfil?.tamanho = fileUploaded?.tamanho
+//                imagemPerfil?.nomeArquivo = fileUploaded?.nomeArquivo
+//            }
+//        }
+//        return imagemPerfil
+//    }
 
     def getIMC(){
         def resultado = [:]
@@ -229,11 +231,19 @@ class PacienteController extends CRUDController{
     }
 
     PlanoAlimentar getPlanoAlimentar(){
-        PlanoAlimentar planoAlimentar = new PlanoAlimentar( data: new Date(), descricao: params.descricao)
+        print params
+        PlanoAlimentar planoAlimentar
+        if( params.idPlanoAlimentar ){
+            planoAlimentar = PlanoAlimentar.get(params.idPlanoAlimentar)
+            planoAlimentar.planosDiarios.clear()
+        }else{
+            planoAlimentar = new PlanoAlimentar( data: new Date(), descricao: params.descricao)
+        }
 
         DiaSemana.values().each { dia ->
             PlanoDiario planoDiario = new PlanoDiario( dia: dia )
-            def listaDeRefeicoes = params.get('refeicoes['+ dia +']')?.split(",")
+            def refeicoes = params.get('refeicoes['+ dia +']') as String
+            def listaDeRefeicoes = refeicoes != null && refeicoes != "" ? Eval.me( refeicoes ) : new ArrayList<>()
             listaDeRefeicoes?.each{ idRefeicao -> planoDiario.addToRefeicoes( Refeicao.get( idRefeicao ) ) }
 
             if( listaDeRefeicoes != null && listaDeRefeicoes.size() > 0 )
@@ -249,5 +259,56 @@ class PacienteController extends CRUDController{
         refeicao.save(flush: true)
         print refeicao.errors
         render refeicao as JSON
+    }
+
+    def deletarPaciente(){
+        Paciente paciente = Paciente.get(params.id)
+        if(paciente?.delete( flush: true ))
+            flash.message = message(code: 'paciente.excluido.label')
+
+        def model = [:]
+        model.put("entityInstance", entity.newInstance(params))
+        model.put("template", "preCadastro" )
+
+        render(template: "preCadastro", model: editaModelPadrao(model, null))
+    }
+
+    def getImagemPerfil(){
+        MultipartHttpServletRequest mRequest = (MultipartHttpServletRequest)request
+        MultipartFile file = null
+        Arquivo arquivo = null
+
+        file = mRequest.getFile( 'imgPerfilPaciente' )
+
+        if(file != null){
+            arquivo = new Arquivo()
+            arquivo.nomeArquivo = file.getOriginalFilename()
+            arquivo.arquivo = file.getBytes()
+        }
+
+        return arquivo
+    }
+
+    def getPerfisSemelhantes( Paciente pacienteAtual ){
+        Anamnese anamneseAtual = getUltimaAnamnese(pacienteAtual)
+        AvaliacaoAntropometrica avaliacaoAntropometrica = getUltimaAvaliacaoAntropometrica(pacienteAtual)
+        if( anamneseAtual ){
+            if(anamneseAtual.patologias != null && anamneseAtual.patologias.size() > 0){
+                //TODO: Pesquisar por patologias
+            }
+        }
+        if( avaliacaoAntropometrica ){
+
+        }
+    }
+
+    Anamnese getUltimaAnamnese( Paciente paciente ){
+        List anamneses = new ArrayList<>( AvaliacaoAntropometrica.findAllByPaciente( paciente, [sort: "data"] ) )
+        return anamneses != null && anamneses.size() > 0 ? anamneses.first() : null
+    }
+
+    AvaliacaoAntropometrica getUltimaAvaliacaoAntropometrica( Paciente paciente ){
+        List avaliacoesAntropometricas = new ArrayList<>( AvaliacaoAntropometrica.findAllByPaciente( paciente, [sort: "data"] ) )
+        return avaliacoesAntropometricas != null && avaliacoesAntropometricas.size() > 0 ? avaliacoesAntropometricas.first() : null
     }
 }

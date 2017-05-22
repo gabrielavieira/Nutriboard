@@ -37,6 +37,7 @@
                                     <b>Peso</b> <a class="pull-right"> ${antropometriaAtual?.pesoAtual} Kg</a>
                                 </li>
                             </ul>
+                            <button type="button" id="removerPaciente" class="btn btn-default btn-xs" data-id="${paciente?.id}"> Deletar </button>
                         </div>
                         <!-- /.box-body -->
                     </div>
@@ -481,7 +482,7 @@
                             </g:if>
                             <form name="formPlanoAlimentar">
                                 <input type="hidden" name="id" value="${paciente?.id}">
-                                <input type="hidden" name="idPlanoAlimentar" value="${paciente?.id}">
+                                <input type="hidden" name="idPlanoAlimentar" value="${planoAlimentarAtual?.id}">
                                 <input type="hidden" name="cadastroPlanoAlimentar" value="${true}">
                                 <div class="panel-group" role="tablist" aria-multiselectable="true">
                                     <div class="form-group col-md-3 data nopad">
@@ -529,12 +530,12 @@
                                                             <g:each in="${planoAlimentarAtual?.planosDiarios}" var="planoDiario">
                                                                 <g:if test="${planoDiario?.dia.equals( diaSemana )}">
                                                                     <g:each in="${planoDiario?.refeicoes}" var="entityInstance">
-                                                                        <tr>
+                                                                        <tr id="refeicao${entityInstance.id}">
+                                                                            <input type="hidden" name="refeicoes[${diaSemana}]" value="${entityInstance.id}"/>
                                                                             <td>${entityInstance.horario}</td>
-                                                                            <td>${entityInstance.observacao}</td>
+                                                                            <td>${entityInstance.getDescricao()}</td>
                                                                             <td>
-                                                                                <button type="button" class="btn btn-default visualizar"><i class="fa fa-pencil"></i></button>
-                                                                                <button type="button" class="btn btn-danger visualizar"><i class="fa fa-times"></i></button>
+                                                                                <button type="button" class="btn btn-danger btn-xs removerRefeicao" data-id="${entityInstance.id}"><i class="fa fa-times"></i></button>
                                                                             </td>
                                                                         </tr>
                                                                     </g:each>
