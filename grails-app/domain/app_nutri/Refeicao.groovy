@@ -18,4 +18,19 @@ class Refeicao {
         }
         return descricao
     }
+
+    def clonar( Refeicao refeicao ){
+        Refeicao nova = new Refeicao()
+        nova.horario = refeicao.horario
+        nova.observacao = refeicao.observacao
+        nova.alimentos = new ArrayList<>()
+
+        if( refeicao.alimentos != null && refeicao.alimentos?.size() > 0 ){
+            refeicao.alimentos.each { nova.alimentos.add( it ) }
+        }
+
+        nova.save( flush: true )
+
+        return nova
+    }
 }

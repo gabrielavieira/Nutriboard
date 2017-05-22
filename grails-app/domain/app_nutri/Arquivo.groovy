@@ -9,6 +9,8 @@ class Arquivo {
 
     static constraints = {
         arquivo nullable: false, maxSize: 20 * 1024 * 1024
+        tipoArquivo nullable: true
+        tamanho nullable: true
     }
 
     static mapping = {

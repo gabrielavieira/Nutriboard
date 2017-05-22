@@ -144,42 +144,6 @@ class PacienteController extends CRUDController{
         return model
     }
 
-    def getArquivoPorParametro(){
-        print params
-        if(params.imgPerfilPaciente){
-            Arquivo arquivo = new Arquivo()
-            CommonsMultipartFile img = params.imgPerfilPaciente
-            arquivo.setArquivo(img.bytes)
-            arquivo.setNomeArquivo(img.getName())
-            arquivo.setTamanho(img.size)
-            arquivo.setTipoArquivo(img.contentType)
-            return arquivo
-        }else{
-            return null
-        }
-    }
-
-//    def getImagemPerfil(){
-//        Arquivo fileUploaded = getArquivoPorParametro()
-//        Paciente paciente = Paciente.get(params.id)
-//        Arquivo imagemPerfil = paciente?.imagemPerfil
-//        if(fileUploaded) {
-//            if(imagemPerfil){
-//                imagemPerfil?.arquivo = fileUploaded?.arquivo
-//                imagemPerfil?.tipoArquivo = fileUploaded?.tipoArquivo
-//                imagemPerfil?.tamanho = fileUploaded?.tamanho
-//                imagemPerfil?.nomeArquivo = fileUploaded?.nomeArquivo
-//            }else{
-//                imagemPerfil = new Arquivo()
-//                imagemPerfil?.arquivo = fileUploaded?.arquivo
-//                imagemPerfil?.tipoArquivo = fileUploaded?.tipoArquivo
-//                imagemPerfil?.tamanho = fileUploaded?.tamanho
-//                imagemPerfil?.nomeArquivo = fileUploaded?.nomeArquivo
-//            }
-//        }
-//        return imagemPerfil
-//    }
-
     def getIMC(){
         def resultado = [:]
         BigDecimal altura = params.altura ? new BigDecimal( params.altura ) : null
@@ -188,11 +152,26 @@ class PacienteController extends CRUDController{
         if( altura && peso ){
             BigDecimal alturaEmMetros = altura/100
             BigDecimal imc = (peso/(alturaEmMetros*alturaEmMetros)).setScale( 2, RoundingMode.HALF_EVEN )
+            StatusPeso statusPeso = getConclusaoSobrePeso(imc)
             resultado.put( "imc", imc )
-            resultado.put( "conclusao", getConclusaoSobrePeso(imc)  )
+            resultado.put( "conclusao", message( code: 'ennumeration.statusPeso.' + statusPeso )  )
+            resultado.put( "corSpan", getCorSpan( statusPeso )  )
         }
 
         render resultado as JSON
+    }
+
+    def getCorSpan( statusPeso ){
+        String resultado = ""
+        if( statusPeso.equals( StatusPeso.NORMAL ) ){
+            resultado = "success"
+        }else if( statusPeso.equals( StatusPeso.ABAIXO ) || statusPeso.equals( StatusPeso.ACIMA ) ){
+            resultado = "warning"
+        }else{
+            resultado = "danger"
+        }
+
+        return resultado
     }
 
     String getConclusaoSobrePeso( BigDecimal imc ){
@@ -205,9 +184,11 @@ class PacienteController extends CRUDController{
             status = StatusPeso.ACIMA
         }else if( imc < new BigDecimal(34.99) ){
             status = StatusPeso.OBESIDADE_1
+        }else{
+            status = StatusPeso.OBESIDADE_2
         }
 
-        return message( code: 'ennumeration.statusPeso.' + status?.name() )
+        return status.name()
     }
 
     def adicionarRefeicao(){
@@ -286,29 +267,56 @@ class PacienteController extends CRUDController{
             arquivo.arquivo = file.getBytes()
         }
 
+        arquivo.save( flush: true )
+
         return arquivo
     }
 
-    def getPerfisSemelhantes( Paciente pacienteAtual ){
-        Anamnese anamneseAtual = getUltimaAnamnese(pacienteAtual)
-        AvaliacaoAntropometrica avaliacaoAntropometrica = getUltimaAvaliacaoAntropometrica(pacienteAtual)
-        if( anamneseAtual ){
-            if(anamneseAtual.patologias != null && anamneseAtual.patologias.size() > 0){
-                //TODO: Pesquisar por patologias
-            }
-        }
-        if( avaliacaoAntropometrica ){
-
-        }
-    }
-
     Anamnese getUltimaAnamnese( Paciente paciente ){
-        List anamneses = new ArrayList<>( AvaliacaoAntropometrica.findAllByPaciente( paciente, [sort: "data"] ) )
+        List anamneses = new ArrayList<>( Anamnese.findAllByPaciente( paciente, [sort: "data"] ) )
         return anamneses != null && anamneses.size() > 0 ? anamneses.first() : null
     }
 
     AvaliacaoAntropometrica getUltimaAvaliacaoAntropometrica( Paciente paciente ){
         List avaliacoesAntropometricas = new ArrayList<>( AvaliacaoAntropometrica.findAllByPaciente( paciente, [sort: "data"] ) )
         return avaliacoesAntropometricas != null && avaliacoesAntropometricas.size() > 0 ? avaliacoesAntropometricas.first() : null
+    }
+
+    PlanoAlimentar getUltimoPlanoAlimentar( Paciente paciente ){
+        List planos = new ArrayList<>( PlanoAlimentar.findAllByPaciente( paciente, [sort: "data"] ) )
+        return planos != null && planos.size() > 0 ? planos.first() : null
+    }
+
+    def imagemPerfilPaciente() {
+        if(params?.idImagem){
+            Arquivo arquivo = Arquivo.get(params?.idImagem)
+            response.contentType = arquivo.getContentType()
+            response.outputStream << arquivo?.arquivo
+            response.outputStream.flush()
+        }
+    }
+
+    PlanoAlimentar getPlanoAlimentarDoPerfilSemelhante( Paciente pacienteAtual ){
+        Anamnese anamneseAtual = getUltimaAnamnese(pacienteAtual)
+        AvaliacaoAntropometrica avaliacaoAntropometrica = getUltimaAvaliacaoAntropometrica(pacienteAtual)
+        Paciente pacienteSimiliar
+        if( anamneseAtual ){
+            if(anamneseAtual.patologias != null && anamneseAtual.patologias.size() > 0){
+                //TODO: Filtrar
+                pacienteSimiliar = Paciente.findByNome("Exemplo Paciente Diabético")
+            }
+        }
+        if( avaliacaoAntropometrica ){
+            //TODO: Filtrar
+            if( avaliacaoAntropometrica.statusPeso.equals(StatusPeso.NORMAL) ){
+                pacienteSimiliar = Paciente.findByNome("Paciente Peso Normal")
+            }else if( avaliacaoAntropometrica.statusPeso.equals(StatusPeso.ACIMA) ){
+                pacienteSimiliar = Paciente.findByNome("Exemplo Paciente Acima do Peso")
+            }
+        }
+        PlanoAlimentar planoPacienteSimiliar = getUltimoPlanoAlimentar( pacienteSimiliar )
+        PlanoAlimentar planoSugerido = planoPacienteSimiliar.clonar( planoPacienteSimiliar )
+
+        return planoSugerido
     }
 }

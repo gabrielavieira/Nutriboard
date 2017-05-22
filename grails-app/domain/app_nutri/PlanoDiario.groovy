@@ -12,4 +12,15 @@ class PlanoDiario {
 
     static constraints = {}
 
+    def clonar( PlanoDiario planoDiario ){
+        PlanoDiario novo = new PlanoDiario()
+        novo.dia = planoDiario.dia
+
+        if( planoDiario?.refeicoes != null && planoDiario?.refeicoes?.size() > 0 ){
+            planoDiario?.refeicoes.each{ novo.addToRefeicoes( it.clonar(it) ) }
+        }
+
+        return novo
+    }
+
 }

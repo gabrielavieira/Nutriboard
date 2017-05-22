@@ -1,4 +1,4 @@
-<%@ page import="app_nutri.Alimento; enums.DiaSemana; enums.PerfilPaciente; sun.misc.Perf" %>
+<%@ page import="enums.StatusPeso; app_nutri.Alimento; enums.DiaSemana; enums.PerfilPaciente; sun.misc.Perf" %>
 <g:render template="msgs"/>
 <div class="content-wrapper ajContentWrapper">
     <!-- Main content -->
@@ -9,7 +9,7 @@
                 <div class="col-md-12 nopad">
                     <div class="box box-primary">
                         <div class="box-body box-profile">
-                            <img class="profile-user-img img-responsive img-circle" src="${resource(dir: "images/", file: "avatar_teste.png")}" alt="User profile picture">
+                            <img class="profile-user-img img-responsive img-circle" src="${createLink(controller: 'paciente', action: 'imagemPerfilPaciente')}\?idImagem=${paciente?.imagemPerfil?.id}"/>
 
                             <h3 class="profile-username text-center">${paciente?.nome}</h3>
 
@@ -451,8 +451,17 @@
                                                                 <input type="text" class="form-control" name="imc" value="${antropometriaAtual?.imc}">
                                                             </div>
                                                         </div>
-                                                        <div class="col-md-4">
-                                                            <span class="label label-warning" id="conclusaoIMC"></span>
+                                                        <div class="col-md-4" id="divStatusPeso">
+                                                            <g:if test="${antropometriaAtual?.statusPeso.equals( enums.StatusPeso.NORMAL )}">
+                                                                <span class="label label-success" id="conclusaoIMC">${antropometriaAtual?.statusPeso}</span>
+                                                            </g:if>
+                                                            <g:if test="${antropometriaAtual?.statusPeso.equals( enums.StatusPeso.ABAIXO ) || antropometriaAtual?.statusPeso.equals( enums.StatusPeso.ACIMA )}">
+                                                                <span class="label label-warning" id="conclusaoIMC">${antropometriaAtual?.statusPeso}</span>
+                                                            </g:if>
+                                                            <g:if test="${antropometriaAtual?.statusPeso.equals( enums.StatusPeso.MUITO_ABAIXO ) || antropometriaAtual?.statusPeso.equals( enums.StatusPeso.OBESIDADE_1 )}">
+                                                                <span class="label label-danger" id="conclusaoIMC">${antropometriaAtual?.statusPeso}</span>
+                                                            </g:if>
+                                                            <input type="hidden" value="${antropometriaAtual?.statusPeso}" name="statusPeso">
                                                         </div>
                                                     </div>
                                                     <div class="form-group col-md-12">

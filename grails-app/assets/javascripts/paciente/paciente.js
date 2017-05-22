@@ -76,17 +76,17 @@ function carregarGraficos() {
 
 };
 
-salvarPreCadastro = function () {
-    jQuery.ajax
-    ({
-        url: "/paciente/save",
-        type: "POST",
-        data : $( '#formNovo' ).find( 'input,select,textarea' ).serialize(),
-        success: function ( data ) {
-            $('#conteudo').html( data );
-        }
-    });
-};
+// salvarPreCadastro = function () {
+//     jQuery.ajax
+//     ({
+//         url: "/paciente/save",
+//         type: "POST",
+//         data : $( '#formNovo' ).find( 'input,select,textarea' ).serialize(),
+//         success: function ( data ) {
+//             $('#conteudo').html( data );
+//         }
+//     });
+// };
 
 salvarAnamnese = function () {
     jQuery.ajax
@@ -133,8 +133,9 @@ atualizarIMC = function () {
         type: "POST",
         data : {altura: altura, peso: peso},
         success: function ( data ) {
+            var span = '<span class="label label-'+ data.corSpan +'" id="conclusaoIMC">'+ data.conclusao +'</span>'
             jQuery('[name=imc]').val(data.imc);
-            jQuery('#conclusaoIMC').text(data.conclusao);
+            jQuery('#divStatusPeso').append(span);
         }
     });
 };
@@ -224,3 +225,49 @@ function cleanAndHideModal() {
     jQuery('#tabelaDeAlimentos tbody').empty();
     jQuery('#modalCadastroReceita').modal('hide');
 }
+
+salvarPreCadastro = function() {
+
+    var nome = jQuery('input[name=nome]').val();
+    var genero = jQuery( "[name=genero] option:selected" ).val();
+    var dtNascimento = jQuery('input[name=dtNascimento]').val();
+    var cpf = jQuery('input[name=cpf]').val();
+    var email = jQuery('input[name=email]').val();
+    var objetivo = jQuery('input[name=objetivo]').val();
+    var arquivo = jQuery( 'input[name=imgPerfilPaciente]' ).length > 0 ? jQuery( 'input[name=imgPerfilPaciente]' )[0].files[0] : null;
+    var formData = new FormData();
+
+    console.log("data >> " + arquivo);
+    console.log("genero >> " + genero);
+
+    formData.append( 'nome', nome );
+    formData.append( 'genero', genero );
+    formData.append( 'dtNascimento', dtNascimento );
+    formData.append( 'cpf', cpf );
+    formData.append( 'email', email );
+
+    if(objetivo){
+        formData.append('objetivo', objetivo)
+    }
+    if(arquivo) {
+        formData.append('imgPerfilPaciente', arquivo);
+    }
+
+    jQuery.ajax(
+        {
+            url: "/paciente/save",
+            type: 'POST',
+            data: formData,
+            processData: false,
+            cache: false,
+            contentType: false,
+            success: function( data )
+            {
+                jQuery('#conteudo').html( data );
+            },
+            error: function( XMLHttpRequest, textStatus, errorThrown )
+            {
+                console.log( errorThrown );
+            }
+        });
+};

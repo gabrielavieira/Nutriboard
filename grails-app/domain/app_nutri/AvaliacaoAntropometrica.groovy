@@ -1,10 +1,13 @@
 package app_nutri
 
+import enums.StatusPeso
+
 class AvaliacaoAntropometrica {
 
     Date data
     Float altura
     Float pesoAtual
+    StatusPeso statusPeso
 
     BigDecimal ombro
     BigDecimal peitoral
@@ -66,6 +69,7 @@ class AvaliacaoAntropometrica {
         pesoOsseo nullable: true
         pesoMuscular nullable: true
         pesoIdeal nullable: true
+        statusPeso nullable: true
     }
 
 }
